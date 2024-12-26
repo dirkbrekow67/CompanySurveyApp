@@ -24,5 +24,13 @@ async function validateCompany(name, department, password) {
     const isPasswordValid = await bcrypt.compare(password, company.password);
     return isPasswordValid;
 }
+async function saveCompany(company) {
+    const hashedPassword = await bcrypt.hash(company.password, 10);
+    company.password = hashedPassword;
 
-module.exports = { validateCompany };
+    const companies = await getCompanies();
+    companies.push(company);
+    await fs.writeFile(companiesPath, JSON.stringify(companies, null, 2));
+}
+
+module.exports = { validateCompany, saveCompany };
