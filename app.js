@@ -2,6 +2,10 @@
 const express = require('express'); // Lädt das Express-Framework
 const app = express();              // Erstellt eine Express-App
 
+// app.js
+app.set('view engine', 'ejs');   // Setzt EJS als Template-Engine
+app.set('views', './views');     // Definiert das Verzeichnis für Views
+
 // Middleware für statische Dateien
 app.use(express.static('public'));
 
