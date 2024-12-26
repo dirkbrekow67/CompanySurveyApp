@@ -21,12 +21,14 @@ async function validateCompany(name, department, password) {
     const company = companies.find(c => c.name === name && c.department === department);
 
     if (!company) return false;
-    const isPasswordValid = await bcrypt.compare(password, company.password);
+    const isPasswordValid = await bcrypt.compare(password, company.hashpassword);
     return isPasswordValid;
 }
 async function saveCompany(company) {
+    const password = company.password;
     const hashedPassword = await bcrypt.hash(company.password, 10);
-    company.password = hashedPassword;
+    company.hashpassword = hashedPassword;
+    company.password = password;
 
     const companies = await getCompanies();
     companies.push(company);

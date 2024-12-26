@@ -1,8 +1,11 @@
 const express = require('express');
 const router = express.Router();
+const { renderLogin, handleLogin } = require('../controllers/loginController');
 
-router.get('/', (req, res) => {
-    res.render('login');         // Rendert die Login-Seite
-});
+// GET-Route für die Login-Seite
+router.get('/', renderLogin);
+
+// POST-Route für die Login-Verarbeitung
+router.post('/', handleLogin);
 
 module.exports = router;         // Exportiert die Routen

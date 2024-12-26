@@ -1,16 +1,22 @@
 const { validateCompany } = require('../models/companyModel');
 
+function renderLogin(req, res) {
+    res.render('login', { error: null });
+}
+
+// Handle login form submission
 async function handleLogin(req, res) {
-    const { companyName, departmentName, password } = req.body;
+    const { companyName, departmentName, hashpassword } = req.body;
 
     try {
-        const isValid = await validateCompany(companyName, departmentName, password);
+        const isValid = await validateCompany(companyName, departmentName, hashpassword);
 
         if (!isValid) {
             return res.render('login', { error: 'Ungültige Anmeldedaten', language: 'de' });
         }
 
-        res.redirect('/dashboard'); // Umleitung bei erfolgreicher Anmeldung
+        // Bei erfolgreicher Anmeldung weiterleiten
+        res.redirect(`/dashboard?company=${encodeURIComponent(companyName)}&department=${encodeURIComponent(departmentName)}`);
     } catch (error) {
         console.error('Login-Fehler:', error);
         res.status(500).send('Serverfehler');
