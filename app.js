@@ -29,6 +29,8 @@ const { strictLimiter, generalLimiter } = require('./middleware/customRateLimit'
 
 const validateInputs = require('./middleware/validateInputs');
 
+const dashboardRoutes = require('./routes/dashboard');
+
 const app = express();
 
 // Middleware für Sessions (für Authentifizierung)
@@ -103,6 +105,8 @@ app.use(helmet({
         },
     },
 }));
+
+app.use('/dashboard', dashboardRoutes);
 
 // Template-Engine für Views
 app.set('view engine', 'ejs');
