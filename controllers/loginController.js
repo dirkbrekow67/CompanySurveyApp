@@ -17,6 +17,13 @@ async function handleLogin(req, res) {
             return res.render('login', { error: 'Ungültige Anmeldedaten' }); // Fehlermeldung bei ungültigen Daten
         }
 
+        if (isValid) {
+            req.session.isLoggedIn = true;
+            req.session.company = companyName;
+            req.session.department = departmentName;
+            return res.redirect('/dashboard');
+        }
+
         // Weiterleitung zum Dashboard bei erfolgreicher Anmeldung
         res.redirect(`/dashboard?company=${encodeURIComponent(companyName)}&department=${encodeURIComponent(departmentName)}`);
     } catch (error) {

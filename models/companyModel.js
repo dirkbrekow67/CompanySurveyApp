@@ -4,6 +4,8 @@ const bcrypt = require('bcrypt'); // Für die Passwortverschlüsselung und -vali
 
 const companiesPath = path.join(__dirname, '../data/companies.json'); // Pfad zur `companies.json`
 
+const logFilePath = path.join(__dirname, '../logs', 'actions.log');
+
 // Funktion: Lädt die Firmendaten aus der JSON-Datei
 async function getCompanies() {
     try {
@@ -54,6 +56,13 @@ async function validateCompany(name, department, inputPassword) {
     // Passwort validieren
     const isPasswordValid = await bcrypt.compare(inputPassword, company.hashpassword);
     return isPasswordValid;
+}
+
+function logAction(action, details) {
+    const logEntry = `[${new Date().toISOString()}] ${action}: ${JSON.stringify(details)}\n`;
+    fs.appendFile(logFilePath, logEntry, (err) => {
+        if (err) console.error('Fehler beim Schreiben des Logs:', err);
+    });
 }
 
 module.exports = { getCompanies, saveCompany, validateCompany }; // Exportiert die Funktionen

@@ -1,20 +1,42 @@
-<!DOCTYPE html>
-<html lang="de">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
-    <link rel="stylesheet" href="/css/styles.css">
-</head>
-<body>
-    <header>
-        <h1>Dashboard</h1>
-    </header>
-    <main>
-        <p>Firma: <strong><%= company %></strong></p> <!-- Zeigt den Namen der Firma -->
-        <p>Abteilung: <strong><%= department %></strong></p> <!-- Zeigt die Abteilung -->
+<h2>Übersicht der Firmen</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Firma</th>
+            <th>Abteilung</th>
+            <th>Startdatum</th>
+            <th>Ablaufdatum</th>
+            <th>Aktionen</th>
+        </tr>
+    </thead>
+    <tbody id="companyTableBody">
+        <!-- Inhalte werden dynamisch geladen -->
+    </tbody>
+</table>
 
-        <!-- Weitere Inhalte könnten hier ergänzt werden -->
-    </main>
-</body>
-</html>
+<script>
+    fetch('/companies/all')
+        .then(response => response.json())
+        .then(data => {
+            const tableBody = document.getElementById('companyTableBody');
+            data.forEach(company => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${company.name}</td>
+                    <td>${company.department}</td>
+                    <td>${company.startDate}</td>
+                    <td>${company.endDate}</td>
+                    <td>
+                        <form action="/companies/edit/${company.id}" method="POST">
+                            <button type="submit">Bearbeiten</button>
+                        </form>
+                        <form action="/companies/delete/${company.id}" method="POST">
+                            <button type="submit">Löschen</button>
+                        </form>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Fehler beim Laden der Firmen:', error));
+</script>
