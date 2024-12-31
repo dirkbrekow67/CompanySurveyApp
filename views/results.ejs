@@ -1,0 +1,23 @@
+<h1>Fragebogenergebnisse</h1>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Firma</th>
+            <th>Abteilung</th>
+            <th>Frage 1</th>
+            <th>Frage 2</th>
+            <th>Abgabedatum</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% results.forEach(result => { %>
+            <tr>
+                <td><%= result.company %></td>
+                <td><%= result.department %></td>
+                <td><%= result.answers.q1 %></td>
+                <td><%= result.answers.q2 %></td>
+                <td><%= result.submittedAt %></td>
+            </tr>
+        <% }) %>
+    </tbody>
+</table>

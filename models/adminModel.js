@@ -3,7 +3,8 @@ const admins = [
     {
         name: 'Admin1',
         email: 'admin1@example.com',
-        hashpassword: '$2b$10$...' // Beispiel-Hash
+        hashpassword: '$2b$10$...', // Beispiel-Hash
+        secret: 'KJASHDKJASHD' // Beispiel-2FA-Schlüssel
     },
     {
         name: 'Admin2',

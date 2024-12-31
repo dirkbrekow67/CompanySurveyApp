@@ -6,7 +6,27 @@
 </head>
 <body>
     <h1>Fragebogen</h1>
-    <p>Firma: <%= company %></p>
-    <p>Abteilung: <%= department %></p>
+<p>Firma: <%= company %></p>
+<p>Abteilung: <%= department %></p>
+
+<form action="/survey/submit" method="POST">
+    <label for="q1">Frage 1: Wie zufrieden sind Sie mit Ihrer Arbeit?</label>
+    <select id="q1" name="q1" required>
+        <option value="1">Gar nicht zufrieden</option>
+        <option value="2">Wenig zufrieden</option>
+        <option value="3">Zufrieden</option>
+        <option value="4">Sehr zufrieden</option>
+    </select>
+
+    <label for="q2">Frage 2: Wie gut ist die Zusammenarbeit in Ihrem Team?</label>
+    <select id="q2" name="q2" required>
+        <option value="1">Sehr schlecht</option>
+        <option value="2">Schlecht</option>
+        <option value="3">Gut</option>
+        <option value="4">Sehr gut</option>
+    </select>
+
+    <button type="submit">Fragebogen abschicken</button>
+</form>
 </body>
 </html>
