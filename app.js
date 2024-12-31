@@ -11,6 +11,8 @@ const adminRoutes = require('./routes/adminRoutes'); // Admin-Login-Routen
 
 const limiter = require('./middleware/rateLimit');
 
+const logger = require('./middleware/logger');
+
 const app = express();
 
 // Middleware für Sessions (für Authentifizierung)
@@ -25,6 +27,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(limiter); // Globale Anwendung des Limiters
+
+// Logging-Middleware
+app.use(logger);
 
 // CSRF-Schutz aktivieren
 app.use(csrfSynchronisedProtection);

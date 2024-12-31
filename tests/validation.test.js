@@ -1,31 +1,26 @@
 import { describe, it, expect } from 'vitest';
-import { JSDOM } from 'jsdom';
+import { validateDates } from '../utils/validation';
 
 describe('Client-Side Validation', () => {
-    it('sollte das Absenden verhindern, wenn das Enddatum vor dem Startdatum liegt', () => {
-        const dom = new JSDOM(`
-            <form id="form">
-                <input id="startDate" value="2024-01-01">
-                <input id="endDate" value="2023-12-31">
-                <button type="submit">Submit</button>
-            </form>
-        `);
-        const document = dom.window.document;
+    it('should prevent submission if the end date is before the start date', () => {
+        const startDate = '2024-01-01';
+        const endDate = '2023-12-31';
+        expect(validateDates(startDate, endDate)).toBe(false);
+    });
 
-        const form = document.getElementById('form');
-        const startDate = document.getElementById('startDate');
-        const endDate = document.getElementById('endDate');
+    it('should allow submission if the dates are valid', () => {
+        const startDate = '2024-01-01';
+        const endDate = '2024-01-02';
+        expect(validateDates(startDate, endDate)).toBe(true);
+    });
 
-        // Validierungslogik
-        form.addEventListener('submit', (event) => {
-            if (new Date(endDate.value) < new Date(startDate.value)) {
-                event.preventDefault();
-            }
-        });
+    it('should handle invalid date formats', () => {
+        const startDate = 'invalid-date';
+        const endDate = '2024-01-02';
+        expect(validateDates(startDate, endDate)).toBe(false);
+    });
 
-        const event = new dom.window.Event('submit', { bubbles: true, cancelable: true });
-        form.dispatchEvent(event);
-
-        expect(event.defaultPrevented).toBe(true); // Das Absenden sollte verhindert werden
+    it('should handle empty dates', () => {
+        expect(validateDates('', '')).toBe(false);
     });
 });

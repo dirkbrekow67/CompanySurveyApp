@@ -1,7 +1,6 @@
-// Middleware: Überprüft, ob ein Benutzer eingeloggt ist
 module.exports = (req, res, next) => {
     if (!req.session || !req.session.isLoggedIn) {
-        return res.redirect('/login'); // Weiterleitung zur Login-Seite, falls nicht eingeloggt
+        return res.status(401).send('Unauthorized: Please log in.');
     }
-    next(); // Weiterleitung zur nächsten Middleware oder Route
+    next();
 };
