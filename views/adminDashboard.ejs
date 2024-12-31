@@ -1,0 +1,17 @@
+<h2>Admin-Verwaltung</h2>
+<table border="1">
+    <thead>
+        <tr>
+            <th>Benutzername</th>
+            <th>E-Mail</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% admins.forEach(admin => { %>
+            <tr>
+                <td><%= admin.username %></td>
+                <td><%= admin.email %></td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>

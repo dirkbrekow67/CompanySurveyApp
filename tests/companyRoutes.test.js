@@ -24,4 +24,15 @@ describe('Company Routes', () => {
         const response = await request(app).post('/companies/delete/1');
         expect(response.statusCode).toBe(302); // Weiterleitung auf /dashboard
     });
+    it('GET /companies/search - sollte Firmen basierend auf dem Suchbegriff zurückgeben', async () => {
+        const response = await request(app).get('/companies/search?query=Test');
+        expect(response.statusCode).toBe(200);
+        expect(Array.isArray(response.body)).toBe(true);
+    });
+
+    it('GET /companies/export - sollte eine CSV-Datei zurückgeben', async () => {
+        const response = await request(app).get('/companies/export');
+        expect(response.statusCode).toBe(200);
+        expect(response.headers['content-type']).toContain('text/csv');
+    });
 });
