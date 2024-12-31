@@ -1,42 +1,100 @@
-<h2>Übersicht der Firmen</h2>
-<table border="1">
-    <thead>
-        <tr>
-            <th>Firma</th>
-            <th>Abteilung</th>
-            <th>Startdatum</th>
-            <th>Ablaufdatum</th>
-            <th>Aktionen</th>
-        </tr>
-    </thead>
-    <tbody id="companyTableBody">
-        <!-- Inhalte werden dynamisch geladen -->
-    </tbody>
-</table>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+</head>
+<body>
+    <header>
+        <h1>Dashboard</h1>
+    </header>
+    <main>
+        <h2>Übersicht der Firmen</h2>
 
-<script>
-    fetch('/companies/all')
-        .then(response => response.json())
-        .then(data => {
-            const tableBody = document.getElementById('companyTableBody');
-            data.forEach(company => {
-                const row = document.createElement('tr');
-                row.innerHTML = `
-                    <td>${company.name}</td>
-                    <td>${company.department}</td>
-                    <td>${company.startDate}</td>
-                    <td>${company.endDate}</td>
-                    <td>
-                        <form action="/companies/edit/${company.id}" method="POST">
-                            <button type="submit">Bearbeiten</button>
-                        </form>
-                        <form action="/companies/delete/${company.id}" method="POST">
-                            <button type="submit">Löschen</button>
-                        </form>
-                    </td>
-                `;
-                tableBody.appendChild(row);
+        <!-- Suchfeld -->
+        <input type="text" id="searchQuery" placeholder="Suche nach Firma oder Abteilung" />
+        <button id="searchButton">Suchen</button>
+
+        <!-- Export-Button -->
+        <a href="/companies/export">
+            <button>Exportieren als CSV</button>
+        </a>
+
+        <!-- Tabelle für Firmen -->
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Firma</th>
+                    <th>Abteilung</th>
+                    <th>Startdatum</th>
+                    <th>Ablaufdatum</th>
+                    <th>Aktionen</th>
+                </tr>
+            </thead>
+            <tbody id="companyTableBody">
+                <!-- Inhalte werden dynamisch durch JavaScript geladen -->
+            </tbody>
+        </table>
+
+        <script>
+            // Suchfunktion
+            document.getElementById('searchButton').addEventListener('click', () => {
+                const query = document.getElementById('searchQuery').value;
+
+                fetch(`/companies/search?query=${encodeURIComponent(query)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const tableBody = document.getElementById('companyTableBody');
+                        tableBody.innerHTML = ''; // Tabelle leeren
+                        data.forEach(company => {
+                            const row = document.createElement('tr');
+                            row.innerHTML = `
+                                <td>${company.name}</td>
+                                <td>${company.department}</td>
+                                <td>${company.startDate}</td>
+                                <td>${company.endDate}</td>
+                                <td>
+                                    <form action="/companies/edit/${company.id}" method="POST">
+                                        <button type="submit">Bearbeiten</button>
+                                    </form>
+                                    <form action="/companies/delete/${company.id}" method="POST">
+                                        <button type="submit">Löschen</button>
+                                    </form>
+                                </td>
+                            `;
+                            tableBody.appendChild(row);
+                        });
+                    })
+                    .catch(error => console.error('Fehler bei der Suche:', error));
             });
-        })
-        .catch(error => console.error('Fehler beim Laden der Firmen:', error));
-</script>
+
+            // Initiales Laden der Firmen
+            fetch('/companies/all')
+                .then(response => response.json())
+                .then(data => {
+                    const tableBody = document.getElementById('companyTableBody');
+                    data.forEach(company => {
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td>${company.name}</td>
+                            <td>${company.department}</td>
+                            <td>${company.startDate}</td>
+                            <td>${company.endDate}</td>
+                            <td>
+                                <form action="/companies/edit/${company.id}" method="POST">
+                                    <button type="submit">Bearbeiten</button>
+                                </form>
+                                <form action="/companies/delete/${company.id}" method="POST">
+                                    <button type="submit">Löschen</button>
+                                </form>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                })
+                .catch(error => console.error('Fehler beim Laden der Firmen:', error));
+        </script>
+    </main>
+</body>
+</html>
