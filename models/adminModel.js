@@ -1,20 +1,32 @@
-// models/adminModel.js: Admin-Daten
+// models/adminModel.js: Verwaltung der Admin-Daten
+const bcrypt = require('bcrypt');
+
+// Beispiel-Admins mit gehashten Passwörtern
 const admins = [
     {
         name: 'Admin1',
         email: 'admin1@example.com',
-        hashpassword: '$2b$10$...', // Beispiel-Hash
-        secret: 'KJASHDKJASHD' // Beispiel-2FA-Schlüssel
+        hashpassword: '$2b$10$...', // Gehashtes Passwort
     },
     {
         name: 'Admin2',
         email: 'admin2@example.com',
-        hashpassword: '$2b$10$...' // Beispiel-Hash
-    }
+        hashpassword: '$2b$10$...', // Gehashtes Passwort
+    },
 ];
 
-async function getAdmins() {
-    return admins; // Gibt die Admin-Daten zurück
+// Funktion: Passwort sicher hashen
+async function hashPassword(password) {
+    const saltRounds = 10;
+    return await bcrypt.hash(password, saltRounds);
 }
 
-module.exports = { getAdmins };
+// Funktion: Neuen Admin hinzufügen
+async function addAdmin(name, email, password) {
+    const hashpassword = await hashPassword(password); // Passwort hashen
+    admins.push({ name, email, hashpassword });
+    console.log('Neuer Admin hinzugefügt:', name);
+}
+
+// Exporte
+module.exports = { admins, hashPassword, addAdmin };

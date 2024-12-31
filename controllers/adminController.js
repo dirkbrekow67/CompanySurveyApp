@@ -1,61 +1,42 @@
-// controllers/adminController.js: Admin-Login-Logik
-const { getAdmins } = require('../models/adminModel');
+// controllers/adminController.js: Logik für Admin-Login
+const logger = require('../logger');
 const bcrypt = require('bcrypt');
-const speakeasy = require('speakeasy');
+const { admins } = require('../models/adminModel');
+const fs = require('fs').promises;
+const path = require('path');
+const loginLogPath = path.join(__dirname, '../data/loginLog.json');
 
+// Funktion: Admin-Login verarbeiten
 async function handleAdminLogin(req, res) {
     const { name, email, password } = req.body;
 
     try {
-        // Admin-Daten abrufen
-        const admins = await getAdmins();
         const admin = admins.find(a => a.email === email && a.name === name);
 
-        // Validierung des Admins
         if (!admin || !(await bcrypt.compare(password, admin.hashpassword))) {
+            logger.warn('Ungültiger Login-Versuch', { email });
             return res.render('adminLogin', { error: 'Ungültige Anmeldedaten' });
         }
 
-        // Admin-Session setzen
+        logger.info('Admin erfolgreich eingeloggt', { email });
+        await logAdminLogin(admin); // Anmeldung protokollieren
+
         req.session.isAdmin = true;
         req.session.adminName = name;
 
-        res.redirect('/dashboard'); // Weiterleitung zum Dashboard
+        res.redirect('/dashboard');
     } catch (error) {
-        console.error('Admin-Login-Fehler:', error);
+        logger.error('Fehler beim Admin-Login', { error });
         res.status(500).render('adminLogin', { error: 'Serverfehler bei der Anmeldung' });
     }
 }
 
-async function handleAdminLogin(req, res) {
-    const { name, email, password, token } = req.body;
-
-    try {
-        const admins = await getAdmins();
-        const admin = admins.find(a => a.email === email && a.name === name);
-
-        if (!admin || !(await bcrypt.compare(password, admin.hashpassword))) {
-            return res.render('adminLogin', { error: 'Ungültige Anmeldedaten' });
-        }
-
-        // TOTP-Code validieren
-        const isTokenValid = speakeasy.totp.verify({
-            secret: admin.secret, // Geheimer Schlüssel des Admins
-            encoding: 'base32',
-            token,
-        });
-
-        if (!isTokenValid) {
-            return res.render('adminLogin', { error: 'Ungültiger 2FA-Code' });
-        }
-
-        req.session.isAdmin = true;
-        req.session.adminName = name;
-        res.redirect('/dashboard');
-    } catch (error) {
-        console.error('Admin-Login-Fehler:', error);
-        res.status(500).render('adminLogin', { error: 'Serverfehler bei der Anmeldung' });
-    }
+// Funktion: Admin-Anmeldungen protokollieren
+async function logAdminLogin(admin) {
+    const logEntry = { name: admin.name, email: admin.email, timestamp: new Date().toISOString() };
+    const logs = JSON.parse(await fs.readFile(loginLogPath, 'utf8') || '[]');
+    logs.push(logEntry);
+    await fs.writeFile(loginLogPath, JSON.stringify(logs, null, 2));
 }
 
 module.exports = { handleAdminLogin };

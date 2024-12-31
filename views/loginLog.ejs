@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Login-Protokolle</title>
+</head>
+<body>
+    <h1>Letzte Admin-Anmeldungen</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>E-Mail</th>
+                <th>Zeit</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% logs.forEach(log => { %>
+                <tr>
+                    <td><%= log.name %></td>
+                    <td><%= log.email %></td>
+                    <td><%= log.timestamp %></td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
+</html>

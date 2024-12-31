@@ -1,37 +1,31 @@
-// routes/adminRoutes.js: Routen für Admin-Login
+// routes/adminRoutes.js: Routen für Admin-Funktionen
 const express = require('express');
 const router = express.Router();
 const { handleAdminLogin } = require('../controllers/adminController');
-const { getSurveyResults } = require('../models/surveyModel');
+const { addAdmin } = require('../models/adminModel');
+const fs = require('fs').promises;
+const path = require('path');
+const loginLogPath = path.join(__dirname, '../data/loginLog.json');
 
-// GET: Admin-Login-Seite anzeigen
-rrouter.get('/login', (req, res) => {
-    res.render('adminLogin'); // CSRF-Token wird automatisch eingefügt
+// GET: Admin-Login-Seite
+router.get('/login', (req, res) => {
+    res.render('adminLogin', { error: null });
 });
 
-// POST: Admin-Login-Daten verarbeiten
+// POST: Admin-Login verarbeiten
 router.post('/login', handleAdminLogin);
 
-router.get('/dashboard/results', async (req, res) => {
-    const results = await getSurveyResults();
-    res.render('results', { results });
+// GET: Letzte Anmeldungen anzeigen
+router.get('/logins', async (req, res) => {
+    const logs = JSON.parse(await fs.readFile(loginLogPath, 'utf8') || '[]');
+    res.render('loginLog', { logs });
 });
 
-router.get('/forgot-password', (req, res) => {
-    res.render('forgotPassword', { error: null });
-});
-
-router.post('/forgot-password', async (req, res) => {
-    const { email } = req.body;
-    const admin = admins.find(a => a.email === email);
-
-    if (!admin) {
-        return res.render('forgotPassword', { error: 'E-Mail nicht gefunden' });
-    }
-
-    // Logik für Passwort-Reset-Link (z. B. per E-Mail senden)
-    console.log(`Passwort-Reset-Link generiert für: ${email}`);
-    res.send('Ein Passwort-Reset-Link wurde an Ihre E-Mail gesendet.');
+// POST: Benutzer hinzufügen
+router.post('/add-user', async (req, res) => {
+    const { name, email, password } = req.body;
+    await addAdmin(name, email, password);
+    res.redirect('/dashboard');
 });
 
 module.exports = router;
