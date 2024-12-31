@@ -11,6 +11,8 @@ const errorLogger = require('./middleware/logger');
 
 const { logAccess } = require('./middleware/logger');
 
+const { logSecurityIncident } = require('./middleware/logger');
+
 const loginRoutes = require('./routes/loginRoutes'); // Benutzer-Login-Routen
 const adminRoutes = require('./routes/adminRoutes'); // Admin-Login-Routen
 
@@ -24,6 +26,8 @@ createLogsDirectory();
 const jsonValidation = require('./middleware/jsonValidation');
 
 const { strictLimiter, generalLimiter } = require('./middleware/customRateLimit');
+
+const validateInputs = require('./middleware/validateInputs');
 
 const app = express();
 
@@ -69,10 +73,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use((err, req, res, next) => {
     if (err.code === 'EBADCSRFTOKEN') {
-        res.status(403).send('Ungültiger CSRF-Token. Bitte laden Sie die Seite neu.');
-    } else {
-        next(err); // Andere Fehler weiterleiten
+        logSecurityIncident('CSRF-Token-Fehler', req);
+        return res.status(403).json({ error: 'Ungültiger CSRF-Token' });
     }
+    next(err);
 });
 
 app.use((err, req, res, next) => {
@@ -84,7 +88,7 @@ app.use((err, req, res, next) => {
 });
 
 // Strenge Begrenzung für Login
-app.use('/login', strictLimiter);
+app.use('/login', validateInputs);
 
 // Allgemeine Begrenzung für andere Routen
 app.use(generalLimiter);

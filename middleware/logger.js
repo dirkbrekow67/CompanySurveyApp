@@ -15,3 +15,8 @@ module.exports = {
         next();
     },
 };
+
+module.exports.logSecurityIncident = (message, req) => {
+    const incidentLog = `[${new Date().toISOString()}] [IP: ${req.ip}] ${message}\n`;
+    fs.appendFileSync(path.join(__dirname, '../logs/security.log'), incidentLog);
+};
