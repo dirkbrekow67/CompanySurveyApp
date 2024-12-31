@@ -10,6 +10,10 @@ describe('Admin Model Tests', () => {
         expect(hash.length).toBeGreaterThan(0);
     });
 
+    it('should throw error for empty password', () => {
+        expect(() => hashPassword('')).toThrow('Password cannot be empty');
+    });
+
     it('should compare passwords correctly', () => {
         const password = 'securePassword123';
         const hash = hashPassword(password);

@@ -5,8 +5,6 @@ const session = require('express-session');
 const path = require('path');
 
 const { csrfSynchronisedProtection, csrfToken } = require('./csrfConfig');
-console.log(typeof csrfSynchronisedProtection); // Debug-Ausgabe
-
 
 const loginRoutes = require('./routes/loginRoutes'); // Benutzer-Login-Routen
 const adminRoutes = require('./routes/adminRoutes'); // Admin-Login-Routen
@@ -76,6 +74,12 @@ app.get('/logout', (req, res) => {
 app.use((err, req, res, next) => {
     console.error(err.stack); // Fehler im Server-Log ausgeben
     res.status(500).send('Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
+});
+
+app.use((req, res, next) => {
+    res.setHeader('X-Content-Type-Options', 'nosniff');
+    res.setHeader('X-Frame-Options', 'DENY');
+    next();
 });
 
 // Server starten

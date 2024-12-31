@@ -1,0 +1,74 @@
+[
+  {
+    "company": {
+      "company": "TestFirma",
+      "department": "IT",
+      "q1": "Yes",
+      "q2": "No"
+    },
+    "submittedAt": "2024-12-31T16:18:33.194Z"
+  },
+  {
+    "company": {
+      "company": "TestFirma",
+      "department": "IT",
+      "q1": "Yes",
+      "q2": "No"
+    },
+    "submittedAt": "2024-12-31T16:18:49.480Z"
+  },
+  {
+    "company": {
+      "company": "TestFirma",
+      "department": "IT",
+      "q1": "Yes",
+      "q2": "No"
+    },
+    "submittedAt": "2024-12-31T16:22:10.680Z"
+  },
+  {
+    "company": {
+      "company": "TestFirma",
+      "department": "IT",
+      "q1": "Yes",
+      "q2": "No"
+    },
+    "submittedAt": "2024-12-31T16:22:31.250Z"
+  },
+  {
+    "company": {
+      "company": "TestFirma",
+      "department": "IT",
+      "q1": "Yes",
+      "q2": "No"
+    },
+    "submittedAt": "2024-12-31T16:23:57.417Z"
+  },
+  {
+    "company": {
+      "company": "TestFirma",
+      "department": "IT",
+      "q1": "Yes",
+      "q2": "No"
+    },
+    "submittedAt": "2024-12-31T16:25:41.099Z"
+  },
+  {
+    "company": {
+      "company": "TestFirma",
+      "department": "IT",
+      "q1": "Yes",
+      "q2": "No"
+    },
+    "submittedAt": "2024-12-31T16:26:36.461Z"
+  },
+  {
+    "company": {
+      "company": "TestFirma",
+      "department": "IT",
+      "q1": "Yes",
+      "q2": "No"
+    },
+    "submittedAt": "2024-12-31T16:34:49.308Z"
+  }
+]

@@ -38,5 +38,29 @@
     "hashpassword": "$2b$10$.zDw7NtrRI2ZKoGu5H6hRusvHwTs//sXeNM44LaxBCS3TOE4TOBzG",
     "startDate": "2025-01-05",
     "endDate": "2025-12-31"
+  },
+  {
+    "name": "TestFirma",
+    "department": "IT",
+    "password": "securePassword123",
+    "hashpassword": "$2a$10$Q/L9uQirc5ZgKAVpssoQr.hhWpL5cnmaTR6.k.a14AE/TrnBXECB2"
+  },
+  {
+    "name": "TestFirma",
+    "department": "IT",
+    "password": "securePassword123",
+    "hashpassword": "$2a$10$fQwMQV.HWphqAGpUoQsXlu1JH2KFwik0EzM5GJMht1HN3m0UUpJsG"
+  },
+  {
+    "name": "TestFirma",
+    "department": "IT",
+    "password": "securePassword123",
+    "hashpassword": "$2a$10$NUagwRbIj5dwQnNkP17/9O9uw3kEU6IVn0FKl2lAPxoriZwdccM6G"
+  },
+  {
+    "name": "TestFirma",
+    "department": "IT",
+    "password": "securePassword123",
+    "hashpassword": "$2a$10$xtspPqDA80yr7/K7lP0yke09PsRgpgpc7tT4mx2rDfhGNkhRhNPMG"
   }
 ]
