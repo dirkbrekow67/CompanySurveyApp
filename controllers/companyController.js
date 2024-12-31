@@ -1,57 +1,27 @@
-const { saveCompany, getCompanies } = require('../models/companyModel');
-const validator = require('validator'); // Für Passwortvalidierung
+const { saveCompany } = require('../models/companyModel');
 
-// Render-Funktion für das Hinzufügen einer neuen Firma
+// GET-Controller: Zeigt das Formular zum Hinzufügen einer neuen Firma
 function renderAddCompany(req, res) {
-    res.render('addCompany');
+    res.render('addCompany', { error: null }); // Rendert die `addCompany`-View und setzt die Fehlermeldung standardmäßig auf `null`
 }
 
-// Verarbeitung der Firmendaten
+// POST-Controller: Speichert die neue Firma
 async function handleAddCompany(req, res) {
-    const { name, department, password } = req.body;
+    const { name, department, password } = req.body; // Extrahiert die Formulardaten
 
     try {
-        // Prüfen, ob alle Felder ausgefüllt sind
+        // Validierung: Überprüft, ob alle Felder ausgefüllt sind
         if (!name || !department || !password) {
-            return res.status(400).render('addCompany', { error: 'Alle Felder sind erforderlich' });
-        }
-
-        // Prüfen, ob Firma und Abteilung bereits existieren
-        const companies = await getCompanies();
-        const exists = companies.some(c => c.name === name && c.department === department);
-        if (exists) {
-            return res.status(400).render('addCompany', { error: 'Die Firma und Abteilung existieren bereits' });
-        }
-
-        // Prüfen, ob das Passwort sicher ist
-        const isPasswordStrong = validator.isStrongPassword(password, {
-            minLength: 12,
-            minLowercase: 1,
-            minUppercase: 1,
-            minNumbers: 1,
-            minSymbols: 1,
-        });
-
-        console.log('Eingabepasswort:', password);
-        console.log('Validierungsergebnis:', isPasswordStrong);
-
-        if (!password || password.length < 12 || !/[A-Z]/.test(password)) {
-            return res.status(400).render('addCompany', { error: 'Ungültiges Passwort' });
-        }
-        
-        if (!isPasswordStrong) {
-            return res.status(400).render('addCompany', {
-                error: 'Das Passwort muss mindestens 12 Zeichen, Großbuchstaben, Kleinbuchstaben, eine Zahl und ein Sonderzeichen enthalten',
-            });
+            return res.render('addCompany', { error: 'Alle Felder sind erforderlich' });
         }
 
         // Firma speichern
         await saveCompany({ name, department, password });
-        res.redirect('/dashboard');
+        res.redirect('/dashboard'); // Weiterleitung zum Dashboard nach erfolgreicher Speicherung
     } catch (error) {
-        console.error('Fehler beim Speichern der Firma:', error);
-        res.status(500).render('addCompany', { error: 'Serverfehler beim Speichern der Firma' });
+        console.error('Fehler beim Speichern der Firma:', error); // Fehlerlog
+        res.status(500).render('addCompany', { error: 'Serverfehler beim Speichern der Firma' }); // Zeigt eine Fehlermeldung an
     }
 }
 
-module.exports = { renderAddCompany, handleAddCompany };
+module.exports = { renderAddCompany, handleAddCompany }; // Exportiert die Funktionen

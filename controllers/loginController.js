@@ -1,29 +1,28 @@
 const { validateCompany } = require('../models/companyModel');
 
-
+// GET-Controller: Zeigt die Login-Seite an
 function renderLogin(req, res) {
-    res.render('login', { error: null });
+    res.render('login', { error: null }); // Rendert die `login`-View und setzt die Fehlermeldung standardmäßig auf `null`
 }
 
-// Handle login form submission
+// POST-Controller: Verarbeitet die Anmeldedaten
 async function handleLogin(req, res) {
-    const { companyName, departmentName, hashpassword } = req.body;
+    const { companyName, departmentName, password } = req.body; // Extrahiert die Formulardaten
 
     try {
-        const isValid = await validateCompany(companyName, departmentName, hashpassword);
-
-        console.log('Eingegebene Daten:', { companyName, departmentName, password });
+        // Validierung der Anmeldedaten
+        const isValid = await validateCompany(companyName, departmentName, password);
 
         if (!isValid) {
-            return res.render('login', { error: 'Ungültige Anmeldedaten', language: 'de' });
+            return res.render('login', { error: 'Ungültige Anmeldedaten' }); // Fehlermeldung bei ungültigen Daten
         }
 
-        // Bei erfolgreicher Anmeldung weiterleiten
+        // Weiterleitung zum Dashboard bei erfolgreicher Anmeldung
         res.redirect(`/dashboard?company=${encodeURIComponent(companyName)}&department=${encodeURIComponent(departmentName)}`);
     } catch (error) {
-        console.error('Login-Fehler:', error);
-        res.status(500).send('Serverfehler');
+        console.error('Login-Fehler:', error); // Fehlerlog
+        res.status(500).render('login', { error: 'Serverfehler bei der Anmeldung' }); // Zeigt eine Fehlermeldung an
     }
 }
 
-module.exports = { renderLogin, handleLogin };
+module.exports = { renderLogin, handleLogin }; // Exportiert die Funktionen
