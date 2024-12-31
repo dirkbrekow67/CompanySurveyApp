@@ -1,6 +1,6 @@
 const fs = require('fs').promises; // Dateioperationen mit Promises
 const path = require('path'); // Modul zum Arbeiten mit Dateipfaden
-const bcrypt = require('bcrypt'); // Für die Passwortverschlüsselung und -validierung
+const bcrypt = require('bcryptjs'); // Für die Passwortverschlüsselung und -validierung
 
 const companiesPath = path.join(__dirname, '../data/companies.json'); // Pfad zur `companies.json`
 

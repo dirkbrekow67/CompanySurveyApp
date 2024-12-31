@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "vitest",
     "start": "nodemon app.js",
     "start-server": "node app.js"
   },
@@ -12,7 +12,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "bcrypt": "^5.1.1",
+    "bcryptjs": "^2.4.3",
     "csrf-csrf": "^3.1.0",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
@@ -25,9 +25,9 @@
     "winston": "^3.17.0"
   },
   "devDependencies": {
-    "jest": "^29.7.0",
     "jsdom": "^25.0.1",
     "morgan": "^1.10.0",
-    "supertest": "^7.0.0"
+    "supertest": "^7.0.0",
+    "vitest": "^2.1.8"
   }
 }

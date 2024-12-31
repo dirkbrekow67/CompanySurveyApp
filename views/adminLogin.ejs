@@ -71,21 +71,13 @@
             <p class="error"><%= error %></p>
         <% } %>
         <form action="/admin/login" method="POST">
-            <!-- CSRF-Token einfügen -->
-            <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-        
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>"> <!-- CSRF-Token -->
             <label for="name">Name:</label>
-            <input type="text" id="name" name="name" placeholder="Ihr Name" required>
-        
+            <input type="text" id="name" name="name" required>
             <label for="email">E-Mail:</label>
-            <input type="email" id="email" name="email" placeholder="E-Mail-Adresse" required>
-        
+            <input type="email" id="email" name="email" required>
             <label for="password">Passwort:</label>
-            <input type="password" id="password" name="password" placeholder="Passwort" required>
-        
-            <label for="token">2FA-Code:</label>
-            <input type="text" id="token" name="token" placeholder="2FA-Code" required>
-        
+            <input type="password" id="password" name="password" required>
             <button type="submit">Anmelden</button>
         </form>
         <!-- Passwort zurücksetzen -->

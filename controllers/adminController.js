@@ -1,42 +1,47 @@
-// controllers/adminController.js: Logik für Admin-Login
-const logger = require('../logger');
-const bcrypt = require('bcrypt');
-const { admins } = require('../models/adminModel');
-const fs = require('fs').promises;
-const path = require('path');
-const loginLogPath = path.join(__dirname, '../data/loginLog.json');
+// adminController.js: Logik für Admin-Login
+const { hashPassword, comparePassword, findAdminByEmail } = require('../models/adminModel');
 
 // Funktion: Admin-Login verarbeiten
-async function handleAdminLogin(req, res) {
-    const { name, email, password } = req.body;
+function handleAdminLogin(req, res) {
+    const { email, password } = req.body;
 
     try {
-        const admin = admins.find(a => a.email === email && a.name === name);
+        // Admin anhand der E-Mail finden
+        const admin = findAdminByEmail(email);
 
-        if (!admin || !(await bcrypt.compare(password, admin.hashpassword))) {
-            logger.warn('Ungültiger Login-Versuch', { email });
-            return res.render('adminLogin', { error: 'Ungültige Anmeldedaten' });
+        // Admin existiert nicht oder Passwort stimmt nicht überein
+        if (!admin || !comparePassword(password, admin.hashpassword)) {
+            return res.status(401).send('Ungültige Anmeldedaten');
         }
 
-        logger.info('Admin erfolgreich eingeloggt', { email });
-        await logAdminLogin(admin); // Anmeldung protokollieren
+        // Admin erfolgreich eingeloggt
+        req.session.isAdmin = true; // Admin-Status in der Session speichern
+        req.session.adminName = admin.name;
 
-        req.session.isAdmin = true;
-        req.session.adminName = name;
-
-        res.redirect('/dashboard');
+        res.send('Login erfolgreich');
     } catch (error) {
-        logger.error('Fehler beim Admin-Login', { error });
-        res.status(500).render('adminLogin', { error: 'Serverfehler bei der Anmeldung' });
+        console.error('Fehler beim Admin-Login:', error);
+        res.status(500).send('Serverfehler');
     }
 }
 
-// Funktion: Admin-Anmeldungen protokollieren
-async function logAdminLogin(admin) {
-    const logEntry = { name: admin.name, email: admin.email, timestamp: new Date().toISOString() };
-    const logs = JSON.parse(await fs.readFile(loginLogPath, 'utf8') || '[]');
-    logs.push(logEntry);
-    await fs.writeFile(loginLogPath, JSON.stringify(logs, null, 2));
+// Funktion: Admin hinzufügen (nur für Testzwecke)
+function addAdmin(req, res) {
+    const { name, email, password } = req.body;
+
+    try {
+        const hashpassword = hashPassword(password); // Passwort hashen
+        const newAdmin = { name, email, hashpassword };
+
+        // Admin-Daten in der Liste speichern
+        const admins = require('../models/adminModel').admins;
+        admins.push(newAdmin);
+
+        res.send('Admin hinzugefügt');
+    } catch (error) {
+        console.error('Fehler beim Hinzufügen eines Admins:', error);
+        res.status(500).send('Fehler beim Hinzufügen eines Admins');
+    }
 }
 
-module.exports = { handleAdminLogin };
+module.exports = { handleAdminLogin, addAdmin };

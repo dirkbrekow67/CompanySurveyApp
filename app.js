@@ -3,9 +3,9 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
-const csrf = require('csrf-csrf'); // Importiere die CSRF-Middleware
-const { csrfSynchronisedProtection, csrfToken } = csrf(); // Middleware und Token-Funktion
 
+const { csrfSynchronisedProtection, csrfToken } = require('./csrfConfig');
+console.log(typeof csrfSynchronisedProtection); // Debug-Ausgabe
 
 
 const loginRoutes = require('./routes/loginRoutes'); // Benutzer-Login-Routen
@@ -22,23 +22,31 @@ app.use(session({
     saveUninitialized: false,
 }));
 
-// Middleware für Formular- und JSON-Daten
+// Body-Parser aktivieren
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(limiter); // Globale Anwendung des Limiters
 
-// CSRF-Middleware hinzufügen
-app.use(csrfSynchronisedProtection); // Schutz für alle POST-Anfragen
+// CSRF-Schutz aktivieren
+app.use(csrfSynchronisedProtection);
 
-// Middleware, um den CSRF-Token in Views verfügbar zu machen
+// CSRF-Token in Views bereitstellen
 app.use((req, res, next) => {
-    res.locals.csrfToken = csrfToken(req); // Token generieren
+    res.locals.csrfToken = csrfToken(req);
     next();
 });
 
 // Statische Dateien bereitstellen
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use((err, req, res, next) => {
+    if (err.code === 'EBADCSRFTOKEN') {
+        res.status(403).send('Ungültiger CSRF-Token. Bitte laden Sie die Seite neu.');
+    } else {
+        next(err); // Andere Fehler weiterleiten
+    }
+});
 
 // Template-Engine für Views
 app.set('view engine', 'ejs');
@@ -54,9 +62,20 @@ app.get('/survey', (req, res) => {
     res.render('survey', { company: req.query.company, department: req.query.department }); // Fragebogen anzeigen
 });
 
+// Beispiel: Admin-Login-Seite
+app.get('/admin/login', (req, res) => {
+    res.render('adminLogin'); // CSRF-Token ist verfügbar
+});
+
 app.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/login'); // Zur Login-Seite zurückleiten
+});
+
+// Globale Fehlerbehandlung
+app.use((err, req, res, next) => {
+    console.error(err.stack); // Fehler im Server-Log ausgeben
+    res.status(500).send('Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.');
 });
 
 // Server starten

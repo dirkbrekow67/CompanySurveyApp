@@ -16,16 +16,24 @@ router.get('/login', (req, res) => {
 router.post('/login', handleAdminLogin);
 
 // GET: Letzte Anmeldungen anzeigen
-router.get('/logins', async (req, res) => {
-    const logs = JSON.parse(await fs.readFile(loginLogPath, 'utf8') || '[]');
-    res.render('loginLog', { logs });
+router.get('/logins', async (req, res, next) => {
+    try {
+        const logs = JSON.parse(await fs.readFile(loginLogPath, 'utf8') || '[]');
+        res.render('loginLog', { logs });
+    } catch (error) {
+        next(error); // Fehler an den globalen Fehlerhandler weitergeben
+    }
 });
 
 // POST: Benutzer hinzufügen
-router.post('/add-user', async (req, res) => {
-    const { name, email, password } = req.body;
-    await addAdmin(name, email, password);
-    res.redirect('/dashboard');
+router.post('/add-user', async (req, res, next) => {
+    try {
+        const { name, email, password } = req.body;
+        await addAdmin(name, email, password);
+        res.redirect('/dashboard');
+    } catch (error) {
+        next(error); // Fehler an den globalen Fehlerhandler weitergeben
+    }
 });
 
 module.exports = router;

@@ -13,13 +13,17 @@ router.get('/', (req, res) => {
 router.post('/', handleLogin);
 
 
-router.post('/survey/submit', async (req, res) => {
-    const { company, department } = req.query;
-    const { q1, q2 } = req.body;
+router.post('/survey/submit', async (req, res, next) => {
+    try {
+        const { company, department } = req.query;
+        const { q1, q2 } = req.body;
 
-    await saveSurveyResults(company, department, { q1, q2 });
+        await saveSurveyResults(company, department, { q1, q2 });
 
-    res.send('Vielen Dank für Ihre Teilnahme!');
+        res.send('Vielen Dank für Ihre Teilnahme!');
+    } catch (error) {
+        next(error); // Fehler an den globalen Fehlerhandler weitergeben
+    }
 });
 
 module.exports = router;

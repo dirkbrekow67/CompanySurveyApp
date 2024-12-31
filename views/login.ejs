@@ -65,15 +65,13 @@
             <p class="error"><%= error %></p>
         <% } %>
         <form action="/login" method="POST">
+            <input type="hidden" name="_csrf" value="<%= csrfToken %>"> <!-- CSRF-Token -->
             <label for="companyName">Firma:</label>
             <input type="text" id="companyName" name="companyName" required>
-
             <label for="departmentName">Abteilung:</label>
             <input type="text" id="departmentName" name="departmentName" required>
-
             <label for="password">Passwort:</label>
             <input type="password" id="password" name="password" required>
-
             <button type="submit">Anmelden</button>
         </form>
     </div>
