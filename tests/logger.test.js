@@ -1,49 +1,40 @@
 import { describe, it, expect, vi } from 'vitest';
 import fs from 'fs';
-import path from 'path';
+import { logError, logAccess } from '../middleware/logger';
 
 vi.mock('fs');
 
 describe('Logger Middleware', () => {
-    it('should log requests to a file', () => {
-        const writeFileSyncSpy = vi.spyOn(fs, 'writeFileSync');
+    it('should log errors to errors.log', () => {
+        const appendFileSyncSpy = vi.spyOn(fs, 'appendFileSync');
 
-        const logger = (req, res, next) => {
-            const log = `${req.method} ${req.url}`;
-            fs.writeFileSync(path.join(__dirname, 'log.txt'), log);
-            next();
-        };
-
-        const req = { method: 'GET', url: '/' };
+        const error = new Error('Test error');
+        const req = {};
         const res = {};
         const next = vi.fn();
 
-        logger(req, res, next);
+        logError(error, req, res, next);
 
-        expect(writeFileSyncSpy).toHaveBeenCalledWith(expect.any(String), 'GET /');
-        expect(next).toHaveBeenCalled();
+        expect(appendFileSyncSpy).toHaveBeenCalledWith(
+            expect.stringContaining('/logs/errors.log'),
+            expect.stringContaining('Test error')
+        );
+        expect(next).toHaveBeenCalledWith(error);
     });
 
-    it('should handle file write errors', () => {
-        vi.spyOn(fs, 'writeFileSync').mockImplementation(() => {
-            throw new Error('File write failed');
-        });
-
-        const logger = (req, res, next) => {
-            try {
-                const log = `${req.method} ${req.url}`;
-                fs.writeFileSync(path.join(__dirname, 'log.txt'), log);
-            } catch (error) {
-                next(error);
-            }
-        };
+    it('should log access to access.log', () => {
+        const appendFileSyncSpy = vi.spyOn(fs, 'appendFileSync');
 
         const req = { method: 'GET', url: '/' };
         const res = {};
         const next = vi.fn();
 
-        logger(req, res, next);
+        logAccess(req, res, next);
 
-        expect(next).toHaveBeenCalledWith(expect.any(Error));
+        expect(appendFileSyncSpy).toHaveBeenCalledWith(
+            expect.stringContaining('/logs/access.log'),
+            expect.stringContaining('GET /')
+        );
+        expect(next).toHaveBeenCalled();
     });
 });

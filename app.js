@@ -6,6 +6,10 @@ const path = require('path');
 
 const { csrfSynchronisedProtection, csrfToken } = require('./csrfConfig');
 
+const errorLogger = require('./middleware/logger');
+
+const { logAccess } = require('./middleware/logger');
+
 const loginRoutes = require('./routes/loginRoutes'); // Benutzer-Login-Routen
 const adminRoutes = require('./routes/adminRoutes'); // Admin-Login-Routen
 
@@ -30,6 +34,16 @@ app.use(limiter); // Globale Anwendung des Limiters
 
 // Logging-Middleware
 app.use(logger);
+
+// Logging von erfolgreichen Anfragen
+app.use(logAccess);
+
+// Globale Fehlerbehandlung
+app.use(errorLogger);
+app.use((err, req, res, next) => {
+    console.error(err.stack); // Fehler in die Konsole ausgeben
+    res.status(500).json({ error: 'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.' });
+});
 
 // CSRF-Schutz aktivieren
 app.use(csrfSynchronisedProtection);

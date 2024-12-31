@@ -1,20 +1,17 @@
 const fs = require('fs');
 const path = require('path');
 
-// Pfad zur Log-Datei
-const logFilePath = path.join(__dirname, '../logs', 'requests.log');
+const logFilePath = path.join(__dirname, '../logs/access.log');
 
-// Middleware: Protokolliert jede Anfrage
-module.exports = (req, res, next) => {
-    const logEntry = `[${new Date().toISOString()}] ${req.method} ${req.url}\n`;
-
-    // Schreibt den Log-Eintrag in die Datei (erstellt die Datei, falls sie nicht existiert)
-    fs.appendFile(logFilePath, logEntry, (err) => {
-        if (err) {
-            console.error('Fehler beim Schreiben der Log-Datei:', err);
-        }
-    });
-
-    console.log(logEntry.trim()); // Log in die Konsole
-    next(); // Ruft die nächste Middleware oder Route auf
+module.exports = {
+    logError: (err, req, res, next) => {
+        const errorLog = `[${new Date().toISOString()}] ${err.stack || err.message}\n`;
+        fs.appendFileSync(path.join(__dirname, '../logs/errors.log'), errorLog);
+        next(err);
+    },
+    logAccess: (req, res, next) => {
+        const accessLog = `[${new Date().toISOString()}] ${req.method} ${req.url}\n`;
+        fs.appendFileSync(logFilePath, accessLog);
+        next();
+    },
 };
