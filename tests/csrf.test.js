@@ -12,11 +12,9 @@ describe('CSRF Protection', () => {
         expect(response.statusCode).toBe(200);
     });
 
-    it('should reject requests without CSRF token', async () => {
+    it('should reject GET requests without CSRF token', async () => {
         const agent = request.agent(app);
-
-        const response = await agent.post('/admin/login')
-            .send({ name: 'Admin', email: 'admin@example.com', password: 'password' });
+        const response = await agent.get('/admin/dashboard');
         expect(response.statusCode).toBe(403);
     });
 

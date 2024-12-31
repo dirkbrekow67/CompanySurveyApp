@@ -17,6 +17,11 @@ const limiter = require('./middleware/rateLimit');
 
 const logger = require('./middleware/logger');
 
+const createLogsDirectory = require('./utils/createLogsDirectory');
+createLogsDirectory();
+
+const jsonValidation = require('./middleware/jsonValidation');
+
 const app = express();
 
 // Middleware für Sessions (für Authentifizierung)
@@ -45,6 +50,8 @@ app.use((err, req, res, next) => {
     res.status(500).json({ error: 'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.' });
 });
 
+app.use(jsonValidation);
+
 // CSRF-Schutz aktivieren
 app.use(csrfSynchronisedProtection);
 
@@ -63,6 +70,14 @@ app.use((err, req, res, next) => {
     } else {
         next(err); // Andere Fehler weiterleiten
     }
+});
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({
+        error: true,
+        message: 'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.',
+    });
 });
 
 // Template-Engine für Views
