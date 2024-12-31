@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const session = require('express-session');
 const path = require('path');
+const helmet = require('helmet');
 
 const { csrfSynchronisedProtection, csrfToken } = require('./csrfConfig');
 
@@ -21,6 +22,8 @@ const createLogsDirectory = require('./utils/createLogsDirectory');
 createLogsDirectory();
 
 const jsonValidation = require('./middleware/jsonValidation');
+
+const { strictLimiter, generalLimiter } = require('./middleware/customRateLimit');
 
 const app = express();
 
@@ -79,6 +82,23 @@ app.use((err, req, res, next) => {
         message: 'Ein unerwarteter Fehler ist aufgetreten. Bitte versuchen Sie es später erneut.',
     });
 });
+
+// Strenge Begrenzung für Login
+app.use('/login', strictLimiter);
+
+// Allgemeine Begrenzung für andere Routen
+app.use(generalLimiter);
+
+// Sicherheitsheader aktivieren
+app.use(helmet({
+    contentSecurityPolicy: {
+        directives: {
+            defaultSrc: ["'self'"],
+            scriptSrc: ["'self'"],
+            objectSrc: ["'none'"],
+        },
+    },
+}));
 
 // Template-Engine für Views
 app.set('view engine', 'ejs');
