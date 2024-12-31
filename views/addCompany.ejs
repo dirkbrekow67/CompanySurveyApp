@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firma hinzufügen</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Neue Firma hinzufügen</h1>
+    </header>
+    <main>
+        <form action="/companies/add" method="POST">
+            <% if (typeof error !== 'undefined') { %>
+                <p id="error" style="color: red;"><%= error %></p>
+            <% } else { %>
+                <p id="error" style="color: red;"></p>
+            <% } %>
+        
+            <label for="name">Name der Firma:</label>
+            <input type="text" id="name" name="name" required>
+        
+            <label for="department">Abteilung:</label>
+            <input type="text" id="department" name="department" required>
+        
+            <label for="password">Passwort:</label>
+            <input type="password" id="password" name="password" required>
+        
+            <button type="submit">Firma speichern</button>
+        </form>
+        <script src="/js/validation.js"></script>
+    </main>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anmeldung</title>
+    <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Firmenanmeldung</h1>
+    </header>
+    <main>
+        <form action="/" method="POST">
+            <label for="companyName">Firmenname:</label>
+            <input type="text" id="companyName" name="companyName" required>
+
+            <label for="departmentName">Abteilung:</label>
+            <input type="text" id="departmentName" name="departmentName" required>
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <div>
+                <label for="languageSelector">Sprache:</label>
+                <select id="languageSelector">
+                    <option value="de">🇩🇪 Deutsch</option>
+                </select>
+            </div>
+            <button type="submit">Anmelden</button>
+            
+            <script src="/js/languageSelector.js"></script>
+        </form>
+    </main>
+</body>
+</html>

@@ -1,27 +1,44 @@
-// app.js
-const express = require('express');
-const path = require('path');
-const bodyParser = require('body-parser');
-const loginRoutes = require('./routes/loginRoutes'); // Importiert die Login-Routen
-const dashboardRoutes = require('./routes/dashboardRoutes');
+const express = require('express'); // Express-Framework für die Erstellung der Serveranwendung
+const bodyParser = require('body-parser'); // Middleware zum Parsen von HTTP-POST-Daten
+const path = require('path'); // Hilft beim Umgang mit Dateipfaden
+const morgan = require('morgan');
 
-const app = express();
+// Importieren der benutzerdefinierten Routen
+const companyRoutes = require('./routes/companyRoutes'); // Routen für die Verwaltung von Firmen
+const loginRoutes = require('./routes/loginRoutes'); // Routen für die Login-Funktionalität
+const dashboardRoutes = require('./routes/dashboardRoutes'); // Routen für das Dashboard
 
-// app.js
-app.set('view engine', 'ejs');   // Setzt EJS als Template-Engine
-app.set('views', './views');     // Definiert das Verzeichnis für Views
+const app = express(); // Erstellt eine Express-Anwendung
 
-// Middleware für statische Dateien
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// Middleware zum Parsen von Formular- und JSON-Daten
+app.use(bodyParser.urlencoded({ extended: true })); // Für x-www-form-urlencoded-Daten
+app.use(bodyParser.json()); // Für JSON-Daten
 
-// Statische Dateien
+// Statische Dateien (CSS, JS, Bilder) bereitstellen
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', loginRoutes);                           // Verknüpft die Login-Routen mit der Basis-URL
+app.use(morgan('dev'));
 
-app.use('/dashboard', dashboardRoutes);
+// Setzt die Template-Engine auf EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
 
-// Starten des Servers
-const PORT = process.env.PORT || 3000; // Verwendet Umgebungsvariable oder Port 3000
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`)); // Startet den Server
+// Routen registrieren
+app.use('/companies', companyRoutes); // Registriert die Routen für Firmen
+app.use('/login', loginRoutes); // Registriert die Routen für Login
+app.use('/dashboard', dashboardRoutes); // Registriert die Routen für das Dashboard
+
+app.use((req, res, next) => {
+    res.status(404).send('Seite nicht gefunden');
+});
+
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Serverfehler');
+});
+
+// Startet den Server auf dem angegebenen Port
+const PORT = process.env.PORT || 3000; // Verwendet entweder die Umgebungsvariable PORT oder 3000 als Standardwert
+app.listen(PORT, () => {
+    console.log(`Server läuft auf Port ${PORT}`); // Bestätigung, dass der Server läuft
+});
