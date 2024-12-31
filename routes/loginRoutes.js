@@ -1,11 +1,14 @@
+// routes/loginRoutes.js: Routen für Benutzer-Login und Fragebogen
 const express = require('express');
 const router = express.Router();
-const { renderLogin, handleLogin } = require('../controllers/loginController');
+const { handleLogin } = require('../controllers/loginController');
 
-// GET-Route: Rendert die Login-Seite
-router.get('/', renderLogin);
+// GET: Login-Seite anzeigen
+router.get('/', (req, res) => {
+    res.render('login', { error: null });
+});
 
-// POST-Route: Verarbeitet die Anmeldedaten und überprüft sie
+// POST: Login-Daten verarbeiten
 router.post('/', handleLogin);
 
-module.exports = router; // Exportiert die Routen, damit sie in `app.js` eingebunden werden können
+module.exports = router;

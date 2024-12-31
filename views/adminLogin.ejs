@@ -2,19 +2,19 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Login</title>
+    <title>Admin Login</title>
 </head>
 <body>
-    <h1>Benutzer-Login</h1>
+    <h1>Admin-Login</h1>
     <% if (error) { %>
         <p style="color: red;"><%= error %></p>
     <% } %>
-    <form action="/login" method="POST">
-        <label for="companyName">Firma:</label>
-        <input type="text" id="companyName" name="companyName" required>
+    <form action="/admin/login" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
 
-        <label for="departmentName">Abteilung:</label>
-        <input type="text" id="departmentName" name="departmentName" required>
+        <label for="email">E-Mail:</label>
+        <input type="email" id="email" name="email" required>
 
         <label for="password">Passwort:</label>
         <input type="password" id="password" name="password" required>

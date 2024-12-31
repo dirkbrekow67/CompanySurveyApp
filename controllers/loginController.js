@@ -1,35 +1,23 @@
+// controllers/loginController.js: Benutzer-Login-Logik
 const { validateCompany } = require('../models/companyModel');
 
-// GET-Controller: Zeigt die Login-Seite an
-function renderLogin(req, res) {
-    res.render('login', { error: null }); // Rendert die `login`-View und setzt die Fehlermeldung standardmäßig auf `null`
-}
-
-// POST-Controller: Verarbeitet die Anmeldedaten
 async function handleLogin(req, res) {
-    const { companyName, departmentName, password } = req.body; // Extrahiert die Formulardaten
+    const { companyName, departmentName, password } = req.body;
 
     try {
-        // Validierung der Anmeldedaten
+        // Firma und Abteilung validieren
         const isValid = await validateCompany(companyName, departmentName, password);
 
         if (!isValid) {
-            return res.render('login', { error: 'Ungültige Anmeldedaten' }); // Fehlermeldung bei ungültigen Daten
+            return res.render('login', { error: 'Ungültige Anmeldedaten' });
         }
 
-        if (isValid) {
-            req.session.isLoggedIn = true;
-            req.session.company = companyName;
-            req.session.department = departmentName;
-            return res.redirect('/dashboard');
-        }
-
-        // Weiterleitung zum Dashboard bei erfolgreicher Anmeldung
-        res.redirect(`/dashboard?company=${encodeURIComponent(companyName)}&department=${encodeURIComponent(departmentName)}`);
+        // Weiterleitung zum Fragebogen
+        res.redirect(`/survey?company=${encodeURIComponent(companyName)}&department=${encodeURIComponent(departmentName)}`);
     } catch (error) {
-        console.error('Login-Fehler:', error); // Fehlerlog
-        res.status(500).render('login', { error: 'Serverfehler bei der Anmeldung' }); // Zeigt eine Fehlermeldung an
+        console.error('Login-Fehler:', error);
+        res.status(500).render('login', { error: 'Serverfehler bei der Anmeldung' });
     }
 }
 
-module.exports = { renderLogin, handleLogin }; // Exportiert die Funktionen
+module.exports = { handleLogin };
