@@ -3,18 +3,40 @@
     "name": "TestFirma",
     "department": "IT",
     "password": "12345678",
-    "hashpassword": "$2b$10$cf7ghduhWIWvsKqMegAQpuTABJMpeS2qsxbbkDGfWg.B97Rrp.5LS"
+    "hashpassword": "$2b$10$cf7ghduhWIWvsKqMegAQpuTABJMpeS2qsxbbkDGfWg.B97Rrp.5LS",
+    "startDate": "2024-01-01",
+    "endDate": "2024-12-31"
   },
   {
     "name": "NeueFirma",
     "department": "Verkauf",
     "password": "SicheresPassword123",
-    "hashpassword": "$2b$10$8T9f7RyTM73Ad4/bSDsJ2.4AEeP5U9lgGChPVKs3igjeAT5Z2e43O"
+    "hashpassword": "$2b$10$8T9f7RyTM73Ad4/bSDsJ2.4AEeP5U9lgGChPVKs3igjeAT5Z2e43O",
+    "startDate": "2024-01-01",
+    "endDate": "2024-12-31"
   },
   {
     "name": "SVG Hamburg eG",
     "department": "Arbeitssicherheit",
     "password": "#Dan67niel!Helix",
-    "hashpassword": "$2b$10$K28BivOsY4XOgjj0NDPD4.5WINhpJE1aD.EzvFdaLb6WyFo.nqr82"
+    "hashpassword": "$2b$10$K28BivOsY4XOgjj0NDPD4.5WINhpJE1aD.EzvFdaLb6WyFo.nqr82",
+    "startDate": "2024-01-01",
+    "endDate": "2024-12-31"
+  },
+  {
+    "name": "Umbrella City Lines",
+    "department": "Linienbus",
+    "password": "#Dan67niel!Helix",
+    "hashpassword": "$2b$10$OlkVhRxZjvOXVEdaSfPHmeFz/A2O9jjedDuR8nJUSvhT7mz7hVFVS",
+    "startDate": "2024-01-01",
+    "endDate": "2024-12-31"
+  },
+  {
+    "name": "Elite Traffic",
+    "department": "Reisebus",
+    "password": "#Dan67niel!Helix",
+    "hashpassword": "$2b$10$.zDw7NtrRI2ZKoGu5H6hRusvHwTs//sXeNM44LaxBCS3TOE4TOBzG",
+    "startDate": "2025-01-05",
+    "endDate": "2025-12-31"
   }
 ]

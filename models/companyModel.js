@@ -19,37 +19,41 @@ async function getCompanies() {
 
 // Funktion: Speichert eine neue Firma in der JSON-Datei
 async function saveCompany(company) {
-    const companies = await getCompanies(); // Lade bestehende Firmen
-    const hashedPassword = await bcrypt.hash(company.password, 10); // Verschlüsselt das Passwort mit Bcrypt
+    const companies = await getCompanies(); // Bestehende Firmen laden
+    const hashedPassword = await bcrypt.hash(company.password, 10); // Passwort verschlüsseln
 
+    // Neue Firma hinzufügen
     companies.push({
         name: company.name, // Name der Firma
         department: company.department, // Abteilung
-        password: company.password, // Unverschlüsseltes Passwort (gewünscht)
-        hashpassword: hashedPassword, // Verschlüsseltes Passwort
+        password: company.password, // Klartextpasswort
+        hashpassword: hashedPassword, // Hashpasswort
+        startDate: company.startDate, // Startdatum
+        endDate: company.endDate, // Ablaufdatum
     });
 
-    await fs.writeFile(companiesPath, JSON.stringify(companies, null, 2)); // Speichere die aktualisierten Daten
+    // Aktualisierte Daten speichern
+    await fs.writeFile(companiesPath, JSON.stringify(companies, null, 2));
 }
 
 // Funktion: Validiert die Anmeldedaten
 async function validateCompany(name, department, inputPassword) {
-    const companies = await getCompanies(); // Lade bestehende Firmen
-    const company = companies.find(c => c.name === name && c.department === department); // Suche nach der Firma und Abteilung
+    const companies = await getCompanies(); // Bestehende Firmen laden
+    const company = companies.find(c => c.name === name && c.department === department);
 
     if (!company) {
-        console.log('Firma nicht gefunden'); // Debugging-Log
-        return false; // Gibt `false` zurück, wenn die Firma nicht existiert
+        console.error('Firma oder Abteilung nicht gefunden');
+        return false;
     }
 
     if (!inputPassword || !company.hashpassword) {
-        console.error('Passwort oder Hash fehlt:', { inputPassword, hash: company.hashpassword }); // Debugging-Log
-        return false; // Gibt `false` zurück, wenn das Passwort oder der Hash fehlt
+        console.error('Eingegebenes Passwort oder gespeicherter Hash fehlt');
+        return false;
     }
 
-    // Überprüft das eingegebene Passwort gegen den gespeicherten Hash
+    // Passwort validieren
     const isPasswordValid = await bcrypt.compare(inputPassword, company.hashpassword);
-    return isPasswordValid; // Gibt `true` zurück, wenn das Passwort korrekt ist
+    return isPasswordValid;
 }
 
 module.exports = { getCompanies, saveCompany, validateCompany }; // Exportiert die Funktionen

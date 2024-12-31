@@ -7,20 +7,20 @@ function renderAddCompany(req, res) {
 
 // POST-Controller: Speichert die neue Firma
 async function handleAddCompany(req, res) {
-    const { name, department, password } = req.body; // Extrahiert die Formulardaten
+    const { name, department, password, startDate, endDate } = req.body;
 
     try {
-        // Validierung: Überprüft, ob alle Felder ausgefüllt sind
-        if (!name || !department || !password) {
+        // Validierung
+        if (!name || !department || !password || !startDate || !endDate) {
             return res.render('addCompany', { error: 'Alle Felder sind erforderlich' });
         }
 
         // Firma speichern
-        await saveCompany({ name, department, password });
-        res.redirect('/dashboard'); // Weiterleitung zum Dashboard nach erfolgreicher Speicherung
+        await saveCompany({ name, department, password, startDate, endDate });
+        res.redirect('/dashboard'); // Weiterleitung nach erfolgreicher Speicherung
     } catch (error) {
-        console.error('Fehler beim Speichern der Firma:', error); // Fehlerlog
-        res.status(500).render('addCompany', { error: 'Serverfehler beim Speichern der Firma' }); // Zeigt eine Fehlermeldung an
+        console.error('Fehler beim Speichern der Firma:', error);
+        res.status(500).render('addCompany', { error: 'Serverfehler beim Speichern der Firma' });
     }
 }
 

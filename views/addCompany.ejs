@@ -18,13 +18,19 @@
         <form action="/companies/add" method="POST">
             <label for="name">Name der Firma:</label>
             <input type="text" id="name" name="name" required>
-
+        
             <label for="department">Abteilung:</label>
             <input type="text" id="department" name="department" required>
-
-            <label for="password">Passwort:</label>
+        
+            <label for="password">Passwort (Klartext):</label>
             <input type="password" id="password" name="password" required>
-
+        
+            <label for="startDate">Startdatum:</label>
+            <input type="date" id="startDate" name="startDate" required>
+        
+            <label for="endDate">Ablaufdatum:</label>
+            <input type="date" id="endDate" name="endDate" required>
+        
             <button type="submit">Firma speichern</button>
         </form>
     </main>
