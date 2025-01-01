@@ -39,6 +39,8 @@ const activityLogger = require('./middleware/activityLogger');
 
 const authRoutes = require('./routes/auth');
 
+const passwordResetRoutes = require('./routes/passwordReset');
+
 const app = express();
 
 // Middleware für Sessions (für Authentifizierung)
@@ -119,6 +121,8 @@ app.use('/export-logs', exportLogs);
 app.use('/export-survey-results', exportSurveyResults);
 
 app.use('/auth', authRoutes);
+
+app.use('/password-reset', passwordResetRoutes);
 
 // Template-Engine für Views
 app.set('view engine', 'ejs');
