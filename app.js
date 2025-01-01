@@ -31,6 +31,8 @@ const validateInputs = require('./middleware/validateInputs');
 
 const dashboardRoutes = require('./routes/dashboard');
 
+const exportLogs = require('./routes/exportLogs');
+
 const app = express();
 
 // Middleware für Sessions (für Authentifizierung)
@@ -107,6 +109,8 @@ app.use(helmet({
 }));
 
 app.use('/dashboard', dashboardRoutes);
+
+app.use('/export-logs', exportLogs);
 
 // Template-Engine für Views
 app.set('view engine', 'ejs');
