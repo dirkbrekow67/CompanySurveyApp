@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sicherheits-Dashboard</title>
+</head>
+<body>
+    <h1>Sicherheitsmetriken</h1>
+    <section>
+        <h2>Fehlerhafte Anmeldungen</h2>
+        <ul id="login-errors"></ul>
+    </section>
+    <section>
+        <h2>CSRF-Angriffe</h2>
+        <ul id="csrf-incidents"></ul>
+    </section>
+    <section>
+        <h2>Suchfehler</h2>
+        <ul id="search-errors"></ul>
+    </section>
+
+    <script>
+        fetch('/security/logs')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('login-errors').innerHTML = data.loginErrors.map(err => `<li>${err}</li>`).join('');
+                document.getElementById('csrf-incidents').innerHTML = data.csrfIncidents.map(incident => `<li>${incident}</li>`).join('');
+                document.getElementById('search-errors').innerHTML = data.searchErrors.map(err => `<li>${err}</li>`).join('');
+            })
+            .catch(() => alert('Fehler beim Laden der Sicherheitsdaten.'));
+    </script>
+</body>
+</html>

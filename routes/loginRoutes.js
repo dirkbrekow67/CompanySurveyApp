@@ -1,8 +1,12 @@
 // routes/loginRoutes.js: Routen für Benutzer-Login und Fragebogen
 const express = require('express');
-const router = express.Router();
 const { handleLogin } = require('../controllers/loginController');
 const { saveSurveyResults } = require('../models/surveyModel');
+const loginLogger = require('../middleware/loginLogger');
+const loginController = require('../controllers/loginController');
+
+const router = express.Router();
+
 
 // GET: Login-Seite anzeigen
 router.get('/', (req, res) => {
@@ -25,5 +29,8 @@ router.post('/survey/submit', async (req, res, next) => {
         next(error); // Fehler an den globalen Fehlerhandler weitergeben
     }
 });
+
+
+router.post('/login', loginLogger, loginController);
 
 module.exports = router;

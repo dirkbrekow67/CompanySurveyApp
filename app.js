@@ -47,6 +47,10 @@ const dataRoutes = require('./routes/dataRoutes');
 
 const searchLogger = require('./middleware/searchLogger');
 
+const securityRoutes = require('./routes/securityRoutes');
+
+const loginLogger = require('../middleware/loginLogger');
+
 const app = express();
 
 // Middleware für Sessions (für Authentifizierung)
@@ -136,6 +140,8 @@ app.use('/data', dataRoutes);
 
 app.use('/data/search', searchLogger);
 
+app.use('/security', securityRoutes);
+
 // Template-Engine für Views
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -147,10 +153,7 @@ app.get('/', (req, res) => {
 app.use('/login', loginRoutes); // Benutzer-Login
 
 // Beispiel für Aktivitätsprotokollierung
-app.post('/login', (req, res, next) => {
-    activityLogger('Login durchgeführt', req.body.email);
-    next();
-});
+router.post('/login', loginLogger, loginController);
 
 app.use('/admin', adminRoutes); // Admin-Login
 app.get('/survey', (req, res) => {

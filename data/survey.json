@@ -1,0 +1,504 @@
+{
+  "languages": {
+    "de": {
+      "title": "Fragebogen zur Gefährdungsbeurteilung psychischer Belastungen",
+      "description1": "Nach der GDA-Leitlinie 2023 „Beratung und Überwachung bei psychischer Belastung“",
+      "description2": "In Anlehnung an BAuA 2014 (Hrsg.): „Gefährdungsbeurteilung psychischer Belastungen“; BMPG: Basismodul psychische Gefährdung („Sicherheitsingenieur“ 03 / 2014, Seite 8-13), sowie FGBU („Dettmers & Krause, Zeitschrift für Arbeits- und Organisationspsychologie, 2 / 2020“).",
+      "description3": "Zur besseren Auswertungsmöglichkeit wurden einige Originalfragen sowie Blöcke invertiert.",
+      "description4": "Bitte beurteilen Sie jeweils, inwieweit die Aussagen auf Ihren Arbeitsplatz zutreffen. Bitte beziehen Sie die Fragen auf den Arbeitsplatz, an dem Sie überwiegend arbeiten.",
+      "AddedInformation": "Zusätzliche Bemerkungen",
+      "options": [
+        {
+          "value": 1,
+          "label": "Passt gar nicht"
+        },
+        {
+          "value": 2,
+          "label": "Passt ein bisschen"
+        },
+        {
+          "value": 3,
+          "label": "Passt fast ganz"
+        },
+        {
+          "value": 4,
+          "label": "Passt genau"
+        }],
+        {
+          "maintitle": "Arbeitsinhalt",
+            {
+              "block": "1",
+              "subtitle": "Vollständigkeit der Aufgabe",
+            "questions": [
+            {
+              "snr": "1.1",
+              "text": "1.1 Ich mache nicht alle Teile einer Aufgabe von Anfang bis Ende.",
+              "subdiscription": "Beispiel: Ich baue ein Produkt nicht komplett zusammen, sondern mache nur einen kleinen Teil."
+            },
+            {
+              "snr": "1.2",
+              "text": "1.2 Ich führe nur kleine Teile einer Aufgabe aus",
+              "subdiscription": "Beispiel: Ich mache keine vollständige Dienstleistung, sondern nur einen Teil davon."
+            },
+            
+          {
+            "snr": "1.3",
+            "text": "1.3 Ich mache nur, was mir gesagt wird.",
+            "subdiscription": "Beispiel: Ich entscheide nicht selbst, was ich tun soll."
+          }
+          ]
+        },
+        {
+          "block": 2,
+          "subtitle": "Handlungsspielraum",
+          "questions": [
+            {
+              "snr": "2.1",
+              "text": "2.1 Andere entscheiden, in welcher Reihenfolge ich arbeiten soll.",
+              "subdiscription": "Beispiel: Mein Chef sagt mir, was zuerst gemacht werden muss."
+            },
+            
+            {
+              "snr": "2.2",
+              "text": "2.2 Ich kann nicht selbst entscheiden, wann ich welche Aufgabe mache.",
+              "subdiscription": "Beispiel: Die Zeitpunkte sind festgelegt."
+            },
+            {
+              "snr": "2.3 Ich kann meine Arbeit nicht unterbrechen, wann ich will.",
+              "text": "2.3 Ich kann meine Arbeit nicht unterbrechen, wann ich will.",
+              "subdiscription": "Beispiel: Ich muss meine Aufgaben in einer festen Reihenfolge machen."
+            }
+          ]
+        },
+        {
+          "block": 3,
+          "subtitle": "Abwechslung",
+          "questions": [
+            {
+              "snr": "3.1",
+              "text": "3.1 Ich mache fast jeden Tag dasselbe.",
+              "subdiscription": "Beispiel: Die Aufgaben ändern sich nicht."
+            },
+            {
+              "snr": "3.2",
+              "text": "3.2 Meine Aufgaben sind oft gleich.",
+              "subdiscription": "Beispiel: Ich benutze immer dieselben Werkzeuge."
+            },
+            
+            {
+              "snr": "3.3",
+              "text": "3.3 Ich brauche für meine Arbeit immer dieselben Fähigkeiten.",
+              "subdiscription": "Beispiel: Ich lerne nichts Neues bei meiner Arbeit."
+            }
+          ]
+        },
+        {
+          "block": 4,
+          "subtitle": "Informationen",
+          "questions": [
+            {
+              "snr": "4.1",
+              "text": "4.1 Es ist schwierig, die richtigen Informationen für meine Arbeit zu finden.",
+              "subdiscription": "Beispiel: Ich muss lange suchen, um etwas herauszufinden."
+            },
+            {
+              "snr": "4.2",
+              "text": "4.2 Informationen sind oft unvollständig oder alt.",
+              "subdiscription": "Beispiel: Daten und Unterlagen sind nicht aktuell."
+            },
+            
+            {
+              "snr": "4.3",
+              "text": "4.3 Ich kann oft keine guten Entscheidungen treffen, weil mir Infos fehlen.",
+              "subdiscription": "Beispiel: Ich weiß nicht alles, was ich wissen müsste."
+            }
+          ]
+        },
+        {
+          "block": 5,
+          "subtitle": "Zu viele Informationen",
+          "questions": [
+            {
+              "snr": "5.1",
+              "text": "5.1 Ich bekomme zu viele Informationen, die nicht wichtig sind.",
+              "subdiscription": "Beispiel: Zu viele E-Mails jeden Tag."
+            },
+            {
+              "snr": "5.2",
+              "text": "5.2 Daten sind unübersichtlich, und ich finde wichtige Infos nicht.",
+              "subdiscription": "Beispiel: Berichte sind zu lang."
+            },
+            {
+              "snr": "5.3",
+              "text": "5.3 Es gibt zu viele Systeme oder Programme, um die Infos zu verwalten.",
+              "subdiscription": "Beispiel: Ich benutze Software, E-Mails und Akten, und das ist zu viel."
+            }
+          ]
+        }
+      }
+        {
+          "maintitle": "Verantwortung und Qualifikation",
+            {
+              
+              "block": 6,
+              "subtitle": "Klarheit der Aufgaben",
+              "questions": [
+            {
+              "snr": "6.1",
+              "text": "6.1 Ich weiß nicht genau, was ich entscheiden darf.",
+              "subdiscription": "Beispiel: Es ist nicht klar, wer für was verantwortlich ist."
+            },
+            {
+              "snr": "6.2",
+              "text": "6.2 Ich bekomme widersprüchliche Anweisungen.",
+              "subdiscription": "Beispiel: Zwei Chefs sagen mir unterschiedliche Dinge."
+            },
+            {
+              "snr": "6.3",
+              "text": "6.3 Ich weiß nicht, was bei der Arbeit am wichtigsten ist.",
+              "subdiscription": "Beispiel: Die Prioritäten ändern sich oft."
+            }
+          ]
+        },
+        {
+          "block": 7,
+          "title": "Zu wenig Einarbeitung",
+          "questions": [
+            {
+              "snr": "7.1",
+              "text": "7.1 Ich mache Aufgaben, für die ich nicht eingearbeitet wurde.",
+              "subdiscription": "Beispiel: Ich bekomme keine Anweisungen oder Erklärungen."
+            },
+            {
+              "snr": "7.2",
+              "text": "7.2 Ich mache Aufgaben, für die ich nicht richtig ausgebildet bin.",
+              "subdiscription": "Beispiel: Mir fehlen wichtige Fähigkeiten."
+            },
+            {
+              "snr": "7.3",
+              "text": "7.3 Ich fühle mich oft überfordert.",
+              "subdiscription": "Beispiel: Die Arbeit ist zu schwer für mich."
+            }
+          ]
+        },
+        {
+          "block": 8,
+          "subtitle": "Zu wenig gefordert",
+          "questions": [
+            {
+              "snr": "8.1",
+              "text": "8.1 Meine Arbeit ist nicht anspruchsvoll.",
+              "subdiscription": "Beispiel: Die Aufgaben sind zu einfach."
+            },
+            {
+              "snr": "8.2",
+              "text": "8.2 Ich denke, ich könnte mehr leisten.",
+              "subdiscription": "Beispiel: Ich nutze meine Fähigkeiten nicht."
+            },
+            {
+              "snr": "8.3",
+              "text": "8.3 Ich fühle mich oft unterfordert.",
+              "subdiscription": "Beispiel: Ich habe zu wenig zu tun."
+            }
+          ]
+        },
+        {
+          "maintitle": "Emotionale Belastungen",
+          
+            {
+              "block": 9,
+              "subtitle": "Emotionale Belastungen",
+              "questions": [
+            {
+              "snr": "9.1",
+              "text": "9.1 Andere Menschen machen mich oft traurig, wütend oder gestresst.",
+              "subdiscription": "Beispiel: Ein Kunde schreit mich an, weil er unzufrieden ist."
+            },
+            {
+              "snr": "9.2",
+              "text": "9.2 Ich erlebe oft aggressives Verhalten.",
+              "subdiscription": "Beispiel: Kunden werden laut oder unhöflich."
+            },
+            {
+              "snr": "9.3",
+              "text": "9.3 Andere beleidigen mich bei der Arbeit.",
+              "subdiscription": "Beispiel: Jemand sagt etwas Gemeines zu mir."
+            }
+          ]
+        },
+        {
+          "block": 10,
+          "subtitle": "Emotionsarbeit",
+          "questions": [
+            {
+              "snr": "10.1",
+              "text": "10.1 Ich muss oft lächeln, auch wenn ich nicht glücklich bin.",
+              "subdiscription": "Beispiel: Ich bin müde, aber ich muss freundlich zu Kunden sein."
+            },
+            {
+              "snr": "10.2",
+              "text": "10.2 Ich muss meine Gefühle oft verstecken.",
+              "subdiscription": "Beispiel: Ich darf nicht zeigen, wenn ich schlecht gelaunt bin."
+            },
+            {
+              "snr": "10.3",
+              "text": "10.3 Ich muss meine Gefühle oft anpassen.",
+              "subdiscription": "Beispiel: Ich tue so, als ob ich zufrieden bin, obwohl ich traurig bin."
+            }
+          ]
+        },
+        {
+          "maintitle": "Arbeitsorganisation",
+          
+            {
+              "block": 11,
+              "subtitle": "Belastende Arbeitszeiten",
+              "questions": [
+            {
+              "snr": "11.1",
+              "text": "11.1 Meine Arbeitszeiten ändern sich oft.",
+              "subdiscription": "Beispiel: Ich weiß nicht, wann ich arbeiten muss."
+            },
+            {
+              "snr": "11.2",
+              "text": "11.2 Ich arbeite zu ungünstigen Zeiten.",
+              "subdiscription": "Beispiel: Ich muss spät abends oder am Wochenende arbeiten."
+            },
+            {
+              "snr": "11.3",
+              "text": "11.3 Meine Arbeitszeiten sind schlecht geplant.",
+              "subdiscription": "Beispiel: Die Schichten passen nicht zusammen."
+            }
+          ]
+        },
+        {
+          "block": 12,
+          "subtitle": "Arbeit ohne klare Grenze",
+          "questions": [
+            {
+              "snr": "12.1",
+              "text": "12.1 Ich mache oft Überstunden.",
+              "subdiscription": "Beispiel: Ich arbeite länger als geplant."
+            },
+            {
+              "snr": "12.2",
+              "text": "12.2 Ich bekomme kurzfristig neue Aufgaben.",
+              "subdiscription": "Beispiel: Der Feierabend verschiebt sich."
+            },
+            {
+              "snr": "12.3",
+              "text": "12.3 Ich muss auch nach der Arbeit verfügbar sein.",
+              "subdiscription": "Beispiel: Ich werde nach Feierabend angerufen."
+            }
+          ]
+        },
+        {
+          "block": 13,
+          "subtitle": "Zeitdruck",
+          "questions": [
+            {
+              "snr": "13.1",
+              "text": "13.1 Ich schaffe meine Arbeit nur, wenn ich länger arbeite oder Pausen auslasse.",
+              "subdiscription": "Beispiel: Ich mache keine Pause, um fertig zu werden."
+            },
+            {
+              "snr": "13.2",
+              "text": "13.2 Es gibt oft viel Zeitdruck.",
+              "subdiscription": "Beispiel: Die Aufgaben müssen schnell erledigt werden."
+            },
+            {
+              "snr": "13.3",
+              "text": "13.3 Ich habe oft nicht genug Zeit für meine Aufgaben.",
+              "subdiscription": "Beispiel: Die Arbeit stapelt sich."
+            }
+          ]
+        },
+        {
+          "block": 14,
+          "subtitle": "Unterbrechungen",
+          "questions": [
+            {
+              "snr": "14.1",
+              "text": "14.1 Andere unterbrechen mich bei der Arbeit.",
+              "subdiscription": "Beispiel: Kollegen fragen mich ständig etwas."
+            },
+            {
+              "snr": "14.2",
+              "text": "14.2 Ich mache oft mehrere Dinge gleichzeitig.",
+              "subdiscription": "Beispiel: Ich springe von einer Aufgabe zur nächsten."
+            },
+            {
+              "snr": "14.3",
+              "text": "14.3 Ich muss oft meine Arbeit unterbrechen.",
+              "subdiscription": "Beispiel: Etwas Dringendes kommt dazwischen."
+            }
+          ]
+        },
+        {
+          "block": 15,
+          "subtitle": "Kommunikation",
+          "questions": [
+            {
+              "snr": "15.1",
+              "text": "15.1 Ich spreche nicht direkt mit Kollegen.",
+              "subdiscription": "Beispiel: Wir kommunizieren nur per E-Mail."
+            },
+            {
+              "snr": "15.2",
+              "text": "15.2 Ich habe keine Zeit, mich mit Kollegen auszutauschen.",
+              "subdiscription": "Beispiel: Ich arbeite alleine und treffe niemanden."
+            },
+            {
+              "snr": "15.3",
+              "text": "15.3 Ich werde oft durch Telefon oder andere gestört.",
+              "subdiscription": "Beispiel: Der Chef unterbricht ständig."
+            }
+          ]
+        },
+        {
+          "maintitle": "Soziale Beziehungen",
+          
+            {
+              "block": 16,
+              "text": "Unterstützung von Kollegen",
+              "questions": [
+            {
+              "snr": "16.1",
+              "text": "16.1 Kollegen helfen mir nicht bei Problemen.",
+              "subdiscription": "Beispiel: Niemand hört zu, wenn ich etwas erkläre."
+            },
+            {
+              "snr": "16.2",
+              "text": "16.2 Ich kann nicht mit meinen Kollegen offen reden.",
+              "subdiscription": "Beispiel: Die Stimmung ist schlecht."
+            },
+            {
+              "snr": "16.3",
+              "text": "16.3 Kollegen hören mir nicht zu.",
+              "subdiscription": "Beispiel: Sie kümmern sich nicht um meine Probleme."
+            }
+          ]
+        },
+        {
+          "block": 17,
+          "subtitle": "Soziale Konflikte",
+          "questions": [
+            {
+              "snr": "17.1",
+              "text": "17.1 Es gibt oft Spannungen mit Kollegen.",
+              "subdiscription": "Beispiel: Wir streiten uns häufig."
+            },
+            {
+              "snr": "17.2",
+              "text": "17.2 Andere kritisieren mich zu viel.",
+              "subdiscription": "Beispiel: Ich werde bloßgestellt."
+            },
+            {
+              "snr": "17.3",
+              "text": "17.3 Es gibt oft Streit am Arbeitsplatz.",
+              "subdiscription": "Beispiel: Niemand versteht sich richtig."
+            }
+          ]
+        },
+        {
+          "block": 18,
+          "subtitle": "Unterstützung durch Vorgesetzte",
+          "questions": [
+            {
+              "snr": "18.1",
+              "text": "18.1 Mein Chef hört sich meine Probleme an.",
+              "subdiscription": "Beispiel: Ich kann mit meinem Chef reden."
+            },
+            {
+              "snr": "18.2",
+              "text": "18.2 Mein Chef hilft mir bei Problemen.",
+              "subdiscription": "Beispiel: Er gibt mir Tipps oder Unterstützung."
+            },
+            {
+              "snr": "18.3",
+              "text": "18.3 Mein Chef macht meine Arbeit einfacher.",
+              "subdiscription": "Beispiel: Er gibt mir klare Anweisungen."
+            }
+          ]
+        },
+        {
+          "block": 19,
+          "subtitle": "Anerkennung",
+          "questions": [
+            {
+              "snr": "19.1",
+              "text": "19.1 Ich bekomme Rückmeldungen zu meiner Arbeit.", 
+              "subdiscription": "Beispiel: Mein Chef sagt mir, was ich gut mache."
+            },
+            {
+              "snr": "19.2",
+              "text": "19.2 Ich bekomme Anerkennung für meine Arbeit.",
+              "subdiscription": "Beispiel: Kollegen loben mich."
+            },
+            {
+              "snr": "19.3",
+              "text": "19.3 Mein Chef gibt mir Feedback.",
+              "subdiscription": "Beispiel: Er erklärt, wie ich mich verbessern kann."
+            }
+          ]
+        },
+        {
+          "block": 20,
+          "subtitle": "Arbeitsumgebung",
+          "questions": [
+            {
+              "snr": "20.1",
+              "text": "20.1 Es ist laut an meinem Arbeitsplatz.",
+              "subdiscription": "Beispiel: Maschinen machen viel Lärm."
+            },
+            {
+              "snr": "20.2",
+              "text": "20.2 Es ist heiß oder ich muss Schutzkleidung tragen.",
+              "subdiscription": "Beispiel: Ich schwitze oft bei der Arbeit."
+            },
+            {
+              "snr": "20.3",
+              "text": "20.3 Das Licht ist schlecht.",
+              "subdiscription": "Beispiel: Es ist zu dunkel oder blendend."
+            },
+            {
+              "snr": "20.4",
+              "text": "20.4 Es gibt gefährliche Stoffe.",
+              "subdiscription": "Beispiel: Ich arbeite mit Chemikalien."
+            },
+            {
+              "snr": "20.5",
+              "text": "20.5 Es ist zu eng.",
+              "subdiscription": "Beispiel: Der Arbeitsplatz ist klein. Ich stoße mich überall an"
+            },
+            {
+              "snr": "20.6",
+              "text": "20.6 Die Möbel sind unbequem.",
+              "subdiscription": "Beispiel: Der Stuhl oder Tisch sind nicht verstellbar."
+            },
+            {
+              "snr": "20.7",
+              "text": "20.7 Ich mache immer dieselben Bewegungen.",
+              "subdiscription": "Beispiel: Ich arbeite im Fließband. Ich stehe oder sitze viel an der Kasse."
+            },
+            {
+              "snr": "20.8",
+              "text": "20.8 Die Arbeitsmittel sind schwer zu bedienen.",
+              "subdiscription": "Beispiel: Geräte funktionieren nicht gut oder sind zu kompliziert."
+            },
+            {
+              "snr": "20.9",
+              "text": "20.9 Die Arbeit ist körperlich anstrengend.",
+              "subdiscription": "Beispiel: Ich muss schwere Dinge tragen."
+            },
+            {
+              "snr": "20.10",
+              "text": "20.10 Die Werkzeuge oder Geräte, die ich benutze, sind nicht gut oder schwer zu bedienen.",
+              "subdiscription": "Beispiel: Eine Maschine ist kaputt, oder ich brauche zu lange, um sie zu benutzen."
+            }
+          ]
+        }
+      ]
+    }
+  }
+}
