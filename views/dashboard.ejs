@@ -66,6 +66,14 @@
         </form>
         <ul id="search-results"></ul>
     </section>
+    <section>
+        <h2>Statistiken</h2>
+        <ul>
+            <li>Anzahl der Datensätze: <%= dataCount %></li>
+            <li>Anzahl der Benutzer: <%= userCount %></li>
+            <li>Fehlgeschlagene Anmeldungen: <%= failedLogins %></li>
+        </ul>
+    </section>
     <a href="/data/export" target="_blank">Suchergebnisse als CSV exportieren</a>
     <a href="/security/export" target="_blank">Sicherheitslogs als CSV exportieren</a>
     

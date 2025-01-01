@@ -1,7 +1,16 @@
-// GET-Controller: Zeigt das Dashboard an
-function renderDashboard(req, res) {
-    const { company, department } = req.query; // Extrahiert Firmen- und Abteilungsinformationen aus der URL
-    res.render('dashboard', { company, department }); // Rendert die `dashboard`-View mit den übergebenen Daten
-}
+const dataModel = require('../models/dataModel');
+const adminModel = require('../models/adminModel');
+const fs = require('fs');
+const path = require('path');
 
-module.exports = { renderDashboard }; // Exportiert die Funktion
+exports.renderDashboard = async (req, res) => {
+    const dataCount = (await dataModel.getAllData()).length;
+    const userCount = (await adminModel.getAllAdmins()).length;
+    const failedLogins = fs.readFileSync(path.join(__dirname, '../logs/loginErrors.log'), 'utf8').split('\n').length - 1;
+
+    res.render('dashboard', {
+        dataCount,
+        userCount,
+        failedLogins,
+    });
+};

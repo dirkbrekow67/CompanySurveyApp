@@ -7,7 +7,7 @@ const helmet = require('helmet');
 
 const { csrfSynchronisedProtection, csrfToken } = require('./csrfConfig');
 
-const errorLogger = require('./middleware/logger');
+// const errorLogger = require('./middleware/logger');
 
 const { logAccess } = require('./middleware/logger');
 
@@ -49,7 +49,7 @@ const searchLogger = require('./middleware/searchLogger');
 
 const securityRoutes = require('./routes/securityRoutes');
 
-const loginLogger = require('../middleware/loginLogger');
+const errorLogger = require('./middleware/errorLogger');
 
 const app = express();
 
@@ -142,6 +142,8 @@ app.use('/data/search', searchLogger);
 
 app.use('/security', securityRoutes);
 
+app.use(errorLogger);
+
 // Template-Engine für Views
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -150,10 +152,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.get('/', (req, res) => {
     res.redirect('/login'); // Weiterleitung zur Login-Seite
 });
-app.use('/login', loginRoutes); // Benutzer-Login
 
 // Beispiel für Aktivitätsprotokollierung
-router.post('/login', loginLogger, loginController);
+//router.post('/login', loginLogger, loginController);
+
+app.use('/login', loginRoutes);
 
 app.use('/admin', adminRoutes); // Admin-Login
 app.get('/survey', (req, res) => {

@@ -2,6 +2,7 @@ const express = require('express');
 const { getDataByUser } = require('../models/dataModel');
 const accessControl = require('../middleware/accessControl');
 const { Parser } = require('json2csv');
+const activityLogger = require('../middleware/activityLogger');
 const router = express.Router();
 
 router.get('/', accessControl('User'), async (req, res) => {
@@ -74,5 +75,11 @@ router.get('/export', accessControl('User'), async (req, res) => {
     res.attachment('search_results.csv');
     res.send(csv);
 });
+
+// Anwenden der Middleware auf alle Datenoperationen
+router.use(activityLogger);
+
+router.post('/add', dataController.addData);
+router.delete('/:id', dataController.deleteData);
 
 module.exports = router;

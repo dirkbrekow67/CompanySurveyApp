@@ -1,8 +1,17 @@
 // controllers/loginController.js: Benutzer-Login-Logik
 const { validateCompany } = require('../models/companyModel');
 
-async function handleLogin(req, res) {
-    const { companyName, departmentName, password } = req.body;
+module.exports = {
+    login: (req, res) => {
+        const { email, password } = req.body;
+        if (email === 'admin@example.com' && password === 'password123') {
+            res.status(200).json({ message: 'Erfolgreich angemeldet' });
+        } else {
+            res.status(401).json({ error: 'Ungültige Anmeldeinformationen' });
+        }
+    },
+    handleLogin: async (req, res) => {
+        const { companyName, departmentName, password } = req.body;
 
     try {
         // Firma und Abteilung validieren
@@ -18,6 +27,5 @@ async function handleLogin(req, res) {
         console.error('Login-Fehler:', error);
         res.status(500).render('login', { error: 'Serverfehler bei der Anmeldung' });
     }
-}
-
-module.exports = { handleLogin };
+    }
+};

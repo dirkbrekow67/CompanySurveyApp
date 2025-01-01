@@ -1,6 +1,5 @@
 // routes/loginRoutes.js: Routen für Benutzer-Login und Fragebogen
 const express = require('express');
-const { handleLogin } = require('../controllers/loginController');
 const { saveSurveyResults } = require('../models/surveyModel');
 const loginLogger = require('../middleware/loginLogger');
 const loginController = require('../controllers/loginController');
@@ -13,8 +12,6 @@ router.get('/', (req, res) => {
     res.render('login', { error: null });
 });
 
-// POST: Login-Daten verarbeiten
-router.post('/', handleLogin);
 
 
 router.post('/survey/submit', async (req, res, next) => {
@@ -31,6 +28,6 @@ router.post('/survey/submit', async (req, res, next) => {
 });
 
 
-router.post('/login', loginLogger, loginController);
+router.post('/login', loginLogger, loginController.login);
 
 module.exports = router;
