@@ -37,6 +37,38 @@
             <ul id="average-ratings"></ul>
         </div>
     </section>
+    <section>
+        <h2>Ergebnisse filtern</h2>
+        <form id="filter-form">
+            <label for="company">Firma:</label>
+            <input type="text" id="company" name="company">
+            
+            <label for="department">Abteilung:</label>
+            <input type="text" id="department" name="department">
+    
+            <button type="button" onclick="filterResults()">Filtern</button>
+        </form>
+        <ul id="filtered-results"></ul>
+    </section>
+    
+    <script>
+        function filterResults() {
+            const company = document.getElementById('company').value;
+            const department = document.getElementById('department').value;
+    
+            fetch(`/dashboard/results?company=${company}&department=${department}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultsList = document.getElementById('filtered-results');
+                    resultsList.innerHTML = '';
+                    data.results.forEach(result => {
+                        const listItem = document.createElement('li');
+                        listItem.textContent = JSON.stringify(result);
+                        resultsList.appendChild(listItem);
+                    });
+                });
+        }
+    </script>
     <script>
         fetch('/dashboard/statistics')
             .then((response) => response.json())

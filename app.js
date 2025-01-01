@@ -35,6 +35,10 @@ const exportLogs = require('./routes/exportLogs');
 
 const exportSurveyResults = require('./routes/exportSurveyResults');
 
+const activityLogger = require('./middleware/activityLogger');
+
+const authRoutes = require('./routes/auth');
+
 const app = express();
 
 // Middleware für Sessions (für Authentifizierung)
@@ -114,6 +118,8 @@ app.use('/export-logs', exportLogs);
 
 app.use('/export-survey-results', exportSurveyResults);
 
+app.use('/auth', authRoutes);
+
 // Template-Engine für Views
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -123,6 +129,13 @@ app.get('/', (req, res) => {
     res.redirect('/login'); // Weiterleitung zur Login-Seite
 });
 app.use('/login', loginRoutes); // Benutzer-Login
+
+// Beispiel für Aktivitätsprotokollierung
+app.post('/login', (req, res, next) => {
+    activityLogger('Login durchgeführt', req.body.email);
+    next();
+});
+
 app.use('/admin', adminRoutes); // Admin-Login
 app.get('/survey', (req, res) => {
     res.render('survey', { company: req.query.company, department: req.query.department }); // Fragebogen anzeigen
