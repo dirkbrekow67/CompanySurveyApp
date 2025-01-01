@@ -50,7 +50,25 @@
         </form>
         <ul id="filtered-results"></ul>
     </section>
+    <section>
+        <h2>Datensätze</h2>
+        <ul id="data-list"></ul>
+    </section>
     
+    <script>
+        fetch('/data')
+            .then(response => response.json())
+            .then(data => {
+                const dataList = document.getElementById('data-list');
+                dataList.innerHTML = '';
+                data.forEach(entry => {
+                    const listItem = document.createElement('li');
+                    listItem.innerText = `Daten: ${entry.data}, Erstellt von: ${entry.createdBy}`;
+                    dataList.appendChild(listItem);
+                });
+            })
+            .catch(() => alert('Fehler beim Laden der Daten.'));
+    </script>
     <script>
         function filterResults() {
             const company = document.getElementById('company').value;

@@ -43,6 +43,8 @@ const passwordResetRoutes = require('./routes/passwordReset');
 
 const adminManagementRoutes = require('./routes/adminManagement');
 
+const dataRoutes = require('./routes/dataRoutes');
+
 const app = express();
 
 // Middleware für Sessions (für Authentifizierung)
@@ -127,6 +129,8 @@ app.use('/auth', authRoutes);
 app.use('/password-reset', passwordResetRoutes);
 
 app.use('/admin-management', adminManagementRoutes);
+
+app.use('/data', dataRoutes);
 
 // Template-Engine für Views
 app.set('view engine', 'ejs');
