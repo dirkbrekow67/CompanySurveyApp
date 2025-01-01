@@ -1,29 +1,24 @@
-const bcrypt = require('bcryptjs'); // CommonJS-Syntax
+const fs = require('fs');
+const path = require('path');
+const bcrypt = require('bcryptjs');
 
-function hashPassword(password) {
-    const saltRounds = 10;
-    return bcrypt.hashSync(password, saltRounds);
+const adminPath = path.join(__dirname, '../data/admins.json');
+
+async function getAdmins() {
+    return JSON.parse(fs.readFileSync(adminPath, 'utf8'));
 }
 
-function comparePassword(password, hash) {
-    return bcrypt.compareSync(password, hash);
+async function addAdmin({ username, email, password }) {
+    const admins = await getAdmins();
+    const hashedPassword = await bcrypt.hash(password, 10);
+    admins.push({ username, email, password: hashedPassword });
+    fs.writeFileSync(adminPath, JSON.stringify(admins));
 }
 
-function findAdminByEmail(email) {
-    return admins.find(admin => admin.email === email);
+async function removeAdmin(email) {
+    const admins = await getAdmins();
+    const updatedAdmins = admins.filter(admin => admin.email !== email);
+    fs.writeFileSync(adminPath, JSON.stringify(updatedAdmins));
 }
 
-const admins = [
-    {
-        name: 'Admin1',
-        email: 'admin1@example.com',
-        hashpassword: bcrypt.hashSync('securePassword123', 10),
-    },
-    {
-        name: 'Admin2',
-        email: 'admin2@example.com',
-        hashpassword: bcrypt.hashSync('anotherSecurePassword456', 10),
-    },
-];
-
-module.exports = { hashPassword, comparePassword, findAdminByEmail, admins };
+module.exports = { getAdmins, addAdmin, removeAdmin };

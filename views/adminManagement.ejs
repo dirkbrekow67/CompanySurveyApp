@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin-Verwaltung</title>
+</head>
+<body>
+    <h1>Admin-Verwaltung</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Benutzername</th>
+                <th>E-Mail</th>
+                <th>Aktionen</th>
+            </tr>
+        </thead>
+        <tbody id="admin-list">
+            <!-- Admin-Einträge werden hier dynamisch geladen -->
+        </tbody>
+    </table>
+    <form id="add-admin-form">
+        <input type="text" name="username" placeholder="Benutzername" required>
+        <input type="email" name="email" placeholder="E-Mail" required>
+        <input type="password" name="password" placeholder="Passwort" required>
+        <button type="button" onclick="addAdmin()">Hinzufügen</button>
+    </form>
+
+    <script>
+        function loadAdmins() {
+            fetch('/admin-management')
+                .then(response => response.json())
+                .then(data => {
+                    const adminList = document.getElementById('admin-list');
+                    adminList.innerHTML = '';
+                    data.forEach(admin => {
+                        const row = `<tr>
+                            <td>${admin.username}</td>
+                            <td>${admin.email}</td>
+                            <td>
+                                <button onclick="removeAdmin('${admin.email}')">Entfernen</button>
+                            </td>
+                        </tr>`;
+                        adminList.innerHTML += row;
+                    });
+                });
+        }
+
+        function addAdmin() {
+            const formData = new FormData(document.getElementById('add-admin-form'));
+            fetch('/admin-management', {
+                method: 'POST',
+                body: formData,
+            })
+            .then(() => loadAdmins())
+            .catch(() => alert('Fehler beim Hinzufügen des Admins'));
+        }
+
+        function removeAdmin(email) {
+            fetch(`/admin-management/${email}`, { method: 'DELETE' })
+                .then(() => loadAdmins())
+                .catch(() => alert('Fehler beim Entfernen des Admins'));
+        }
+
+        loadAdmins();
+    </script>
+</body>
+</html>
