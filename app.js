@@ -45,6 +45,8 @@ const adminManagementRoutes = require('./routes/adminManagement');
 
 const dataRoutes = require('./routes/dataRoutes');
 
+const searchLogger = require('./middleware/searchLogger');
+
 const app = express();
 
 // Middleware für Sessions (für Authentifizierung)
@@ -131,6 +133,8 @@ app.use('/password-reset', passwordResetRoutes);
 app.use('/admin-management', adminManagementRoutes);
 
 app.use('/data', dataRoutes);
+
+app.use('/data/search', searchLogger);
 
 // Template-Engine für Views
 app.set('view engine', 'ejs');

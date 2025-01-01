@@ -54,6 +54,39 @@
         <h2>Datensätze</h2>
         <ul id="data-list"></ul>
     </section>
+    <section>
+        <h2>Datensätze durchsuchen</h2>
+        <form id="search-form">
+            <input type="text" id="search-query" placeholder="Stichwort eingeben">
+            <label for="start-date">Startdatum:</label>
+            <input type="date" id="start-date">
+            <label for="end-date">Enddatum:</label>
+            <input type="date" id="end-date">
+            <button type="button" onclick="searchData()">Suchen</button>
+        </form>
+        <ul id="search-results"></ul>
+    </section>
+    <a href="/data/export" target="_blank">Suchergebnisse als CSV exportieren</a>
+    
+    <script>
+        function searchData() {
+            const query = document.getElementById('search-query').value;
+            const startDate = document.getElementById('start-date').value;
+            const endDate = document.getElementById('end-date').value;
+    
+            fetch(`/data/search?query=${query}&start=${startDate}&end=${endDate}`)
+                .then(response => response.json())
+                .then(data => {
+                    const resultsList = document.getElementById('search-results');
+                    resultsList.innerHTML = '';
+                    data.forEach(entry => {
+                        const listItem = `<li>${entry.data} - Erstellt von: ${entry.createdBy}</li>`;
+                        resultsList.innerHTML += listItem;
+                    });
+                })
+                .catch(() => alert('Fehler bei der Suche.'));
+        }
+    </script>
     
     <script>
         fetch('/data')
