@@ -30,6 +30,30 @@
         <h2>Fragebogenergebnisse herunterladen</h2>
         <button onclick="window.location.href='/export-survey-results'">Ergebnisse herunterladen</button>
     </section>
+    <section>
+        <h2>Statistiken</h2>
+        <div id="statistics">
+            <p>Gesamtantworten: <span id="total-responses"></span></p>
+            <ul id="average-ratings"></ul>
+        </div>
+    </section>
+    <script>
+        fetch('/dashboard/statistics')
+            .then((response) => response.json())
+            .then((data) => {
+                document.getElementById('total-responses').innerText = data.totalResponses;
+    
+                const ratingsList = document.getElementById('average-ratings');
+                Object.entries(data.averageRatings).forEach(([key, value]) => {
+                    const listItem = document.createElement('li');
+                    listItem.innerText = `${key}: ${value}`;
+                    ratingsList.appendChild(listItem);
+                });
+            })
+            .catch(() => {
+                document.getElementById('statistics').innerText = 'Fehler beim Laden der Statistiken.';
+            });
+    </script>
     <script src="/scripts/dashboard.js"></script>
 </body>
 </html>

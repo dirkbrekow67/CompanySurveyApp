@@ -56,4 +56,36 @@ router.get('/results', (req, res) => {
     }
 });
 
+router.get('/statistics', (req, res) => {
+    try {
+        const resultsPath = path.join(__dirname, '../data/surveyResults.json');
+        if (!fs.existsSync(resultsPath)) {
+            return res.status(404).json({ error: 'Keine Ergebnisse gefunden' });
+        }
+
+        const surveyResults = JSON.parse(fs.readFileSync(resultsPath, 'utf8'));
+        const totalResponses = surveyResults.length;
+
+        const averageRatings = surveyResults.reduce((acc, result) => {
+            Object.keys(result).forEach((key) => {
+                if (key.startsWith('q')) { // Nur Fragen berücksichtigen
+                    acc[key] = (acc[key] || 0) + parseInt(result[key], 10);
+                }
+            });
+            return acc;
+        }, {});
+
+        Object.keys(averageRatings).forEach((key) => {
+            averageRatings[key] = (averageRatings[key] / totalResponses).toFixed(2);
+        });
+
+        res.json({
+            totalResponses,
+            averageRatings,
+        });
+    } catch (error) {
+        res.status(500).json({ error: 'Fehler beim Laden der Statistiken' });
+    }
+});
+
 module.exports = router;
