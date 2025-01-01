@@ -8,10 +8,10 @@ async function getAdmins() {
     return JSON.parse(fs.readFileSync(adminPath, 'utf8'));
 }
 
-async function addAdmin({ username, email, password }) {
+async function addAdmin({ username, email, password, role = 'User' }) {
     const admins = await getAdmins();
     const hashedPassword = await bcrypt.hash(password, 10);
-    admins.push({ username, email, password: hashedPassword });
+    admins.push({ username, email, password: hashedPassword, role });
     fs.writeFileSync(adminPath, JSON.stringify(admins));
 }
 

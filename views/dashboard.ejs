@@ -86,6 +86,28 @@
                 document.getElementById('statistics').innerText = 'Fehler beim Laden der Statistiken.';
             });
     </script>
+    <script>
+        function loadDashboard() {
+            fetch('/dashboard/data')
+                .then(response => response.json())
+                .then(data => {
+                    const userRole = data.userRole; // Vom Backend gesendet
+                    const resultsList = document.getElementById('data-list');
+                    resultsList.innerHTML = '';
+    
+                    data.entries.forEach(entry => {
+                        const row = `<li>${entry.data} - Erstellt von: ${entry.createdBy}</li>`;
+                        if (userRole === 'User' && entry.createdBy === data.userEmail) {
+                            resultsList.innerHTML += row;
+                        } else if (userRole === 'Administrator' || userRole === 'Betriebsarzt') {
+                            resultsList.innerHTML += row;
+                        }
+                    });
+                });
+        }
+    
+        loadDashboard();
+    </script>
     <script src="/scripts/dashboard.js"></script>
 </body>
 </html>
